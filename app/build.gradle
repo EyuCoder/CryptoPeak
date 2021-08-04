@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -46,11 +47,23 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
 
-    def viewmodel_version = "2.3.1"
+    def vm_version = "2.3.1"
     //Lifecycle + ViewModel & LiveData
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$viewmodel_version"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$viewmodel_version"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$viewmodel_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$vm_version"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$vm_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$vm_version"
+
+    def room_version = "2.3.0"
+    // Room database
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+
+    def dagger_version = "2.38.1"
+    //dagger2 for DI
+    implementation "com.google.dagger:dagger:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    kaptAndroidTest "com.google.dagger:dagger-compiler:$dagger_version"
 
     def moshi_version = "1.9.3"
     //moshi json parser

@@ -1,21 +1,29 @@
 package com.codexo.cryptopeak
 
-import androidx.lifecycle.MutableLiveData
+import android.app.Application
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.codexo.cryptopeak.network.CoinData
+import com.codexo.cryptopeak.database.CoinDatabase.Companion.getDatabase
 import com.codexo.cryptopeak.repository.Repository
 import kotlinx.coroutines.launch
 
-class MainViewModel(repository: Repository) : ViewModel() {
+class MainViewModel(application: Application) : ViewModel() {
 
-    private var _response: MutableLiveData<CoinData> = MutableLiveData()
-    val response: MutableLiveData<CoinData>
-        get() = _response
+    private val database = getDatabase(application)
+    private val repository = Repository(database)
 
-    fun getAssets(){
+    init {
         viewModelScope.launch {
-
+            repository.refreshCoin()
         }
+    }
+
+    val response = repository.coinData
+}
+
+class MainViewModelFactory(private val application: Application) : ViewModelProvider.Factory {
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        return MainViewModel(application) as T
     }
 }
