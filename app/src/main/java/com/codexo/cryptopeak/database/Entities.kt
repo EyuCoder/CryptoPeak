@@ -1,10 +1,13 @@
 package com.codexo.cryptopeak.database
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.android.parcel.Parcelize
 import com.codexo.cryptopeak.network.CoinDataContainer
 
 @Entity(tableName = "coin_data")
+@Parcelize
 data class CoinData(
     @PrimaryKey
     val id: String,
@@ -19,7 +22,7 @@ data class CoinData(
     val changePercent24Hr: String?,
     val vwap24Hr: String?,
     val explorer: String?
-)
+): Parcelable
 
 fun CoinDataContainer.asDomainModel(): List<CoinData> {
     return data.map {

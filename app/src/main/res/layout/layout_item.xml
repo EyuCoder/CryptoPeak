@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="coinData"
+            type="com.codexo.cryptopeak.database.CoinData" />
+    </data>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        open_detail="@{coinData}"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_coin_img"
+            image_url="@{coinData.symbol}"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="14dp"
+            android:contentDescription="@string/cryptocurrency_symbol"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/tv_coin_symbol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{coinData.symbol}"
+            android:gravity="start"
+            app:layout_constraintEnd_toEndOf="@+id/tv_coin_name"
+            app:layout_constraintStart_toStartOf="@+id/tv_coin_name"
+            app:layout_constraintTop_toTopOf="@+id/iv_coin_img"
+            tools:text="tools text" />
+
+        <TextView
+            android:id="@+id/tv_coin_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@{coinData.name}"
+            android:gravity="start"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_coin_img"
+            app:layout_constraintStart_toEndOf="@+id/iv_coin_img"
+            tools:text="tools text" />
+
+        <TextView
+            android:id="@+id/tv_price_usd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="@{coinData.priceUsd}"
+            android:gravity="end"
+            app:layout_constraintEnd_toEndOf="@+id/tv_change_24hr"
+            app:layout_constraintStart_toEndOf="@+id/tv_coin_symbol"
+            app:layout_constraintStart_toStartOf="@+id/tv_change_24hr"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="tools text" />
+
+        <TextView
+            android:id="@+id/tv_change_24hr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="@{coinData.vwap24Hr}"
+            android:gravity="end"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.973"
+            app:layout_constraintStart_toEndOf="@+id/tv_coin_name"
+            tools:text="tools text" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

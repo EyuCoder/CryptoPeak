@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/coinFragment">
+
+    <fragment
+        android:id="@+id/coinFragment"
+        android:name="com.codexo.cryptopeak.ui.CoinFragment"
+        android:label="fragment_coin"
+        tools:layout="@layout/fragment_coin" >
+        <action
+            android:id="@+id/action_coinFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.codexo.cryptopeak.ui.DetailFragment"
+        android:label="DetailFragment" >
+        <argument
+            android:name="selectedItem"
+            app:argType="com.codexo.cryptopeak.database.CoinData" />
+    </fragment>
+</navigation>
