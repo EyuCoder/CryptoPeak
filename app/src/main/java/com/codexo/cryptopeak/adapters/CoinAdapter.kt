@@ -2,29 +2,37 @@ package com.codexo.cryptopeak.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.codexo.cryptopeak.database.CoinData
 import com.codexo.cryptopeak.databinding.LayoutItemBinding
 
 class CoinAdapter :
-    ListAdapter<CoinData, CoinAdapter.CoinViewHolder>(DiffCallBack()) {
+    ListAdapter<CoinData, CoinAdapter.CoinViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoinViewHolder {
-        return CoinViewHolder(LayoutItemBinding.inflate(LayoutInflater.from(parent.context)))
+        return CoinViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: CoinViewHolder, position: Int) {
-        val coinData = getItem(position)
-        holder.bind(coinData)
+        holder.bind(getItem(position))
     }
 
-    inner class CoinViewHolder(private val binding: LayoutItemBinding) :
+    class CoinViewHolder(private val binding: LayoutItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(coinData: CoinData) {
             binding.coinData = coinData
             binding.executePendingBindings()
+        }
+
+        companion object {
+            fun from(parent: ViewGroup): CoinViewHolder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val binding = LayoutItemBinding.inflate(layoutInflater, parent, false)
+                return CoinViewHolder(binding)
+            }
         }
     }
 }

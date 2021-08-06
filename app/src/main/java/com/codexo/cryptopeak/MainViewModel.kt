@@ -1,6 +1,7 @@
 package com.codexo.cryptopeak
 
 import android.app.Application
+import android.os.SystemClock
 import android.widget.Toast
 import androidx.lifecycle.*
 import com.codexo.cryptopeak.database.CoinDatabase.Companion.getDatabase
@@ -21,13 +22,15 @@ class MainViewModel(application: Application) : ViewModel() {
 
     init {
         viewModelScope.launch {
-            _status.value = NetworkStatus.LOADING
-            try {
-                repository.refreshCoin()
-                _status.value = NetworkStatus.DONE
-            } catch (e: Exception) {
-                _status.value = NetworkStatus.ERROR
-                Toast.makeText(application, "No Internet Connection", Toast.LENGTH_SHORT).show()
+            repeat(10){
+                _status.value = NetworkStatus.LOADING
+                try {
+                    repository.refreshCoin()
+                    _status.value = NetworkStatus.DONE
+                } catch (e: Exception) {
+                    _status.value = NetworkStatus.ERROR
+                    Toast.makeText(application, "No Internet Connection", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

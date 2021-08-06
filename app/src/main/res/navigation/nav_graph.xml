@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_coinFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_coinFragment_to_favoriteFragment"
+            app:destination="@id/favoriteFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
@@ -22,4 +25,8 @@
             android:name="selectedItem"
             app:argType="com.codexo.cryptopeak.database.CoinData" />
     </fragment>
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="com.codexo.cryptopeak.ui.FavoriteFragment"
+        android:label="FavoriteFragment" />
 </navigation>
