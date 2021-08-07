@@ -13,11 +13,18 @@ import kotlinx.coroutines.withContext
 class Repository(private val database: CoinDatabase) {
 
     val coinData: LiveData<List<CoinData>> = database.dao.getAllCoin()
+    val favoriteCoin: LiveData<List<CoinData>> = database.dao.getFavCoin()
 
     suspend fun refreshCoin(){
         withContext(Dispatchers.IO){
             val coinData =Network.coinCap.getAssets()
             database.dao.insertAll(coinData.body()!!.asDatabaseModel())
+        }
+    }
+
+    suspend fun markAsFavorite(flag: Boolean, id: String){
+        withContext(Dispatchers.IO) {
+            database.dao.markAsFavorite(flag, id)
         }
     }
 }

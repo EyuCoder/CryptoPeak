@@ -1,7 +1,7 @@
-package com.codexo.cryptopeak
+package com.codexo.cryptopeak.viewmodels
 
 import android.app.Application
-import android.os.SystemClock
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.*
 import com.codexo.cryptopeak.database.CoinDatabase.Companion.getDatabase
@@ -22,7 +22,7 @@ class MainViewModel(application: Application) : ViewModel() {
 
     init {
         viewModelScope.launch {
-            repeat(10){
+            repeat(10) {
                 _status.value = NetworkStatus.LOADING
                 try {
                     repository.refreshCoin()
@@ -35,7 +35,16 @@ class MainViewModel(application: Application) : ViewModel() {
         }
     }
 
-    val response = repository.coinData
+    val coinData = repository.coinData
+    val favoriteCoin = repository.favoriteCoin
+
+
+    fun markAsFavorite(flag: Boolean, id: String) {
+        viewModelScope.launch {
+            repository.markAsFavorite(!flag, id)
+            Log.d("CODEXOX", "markAsFavorite: clicked")
+        }
+    }
 }
 
 class MainViewModelFactory(private val application: Application) : ViewModelProvider.Factory {

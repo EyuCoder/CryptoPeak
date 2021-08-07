@@ -3,16 +3,12 @@ package com.codexo.cryptopeak.ui
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.codexo.cryptopeak.MainViewModel
-import com.codexo.cryptopeak.MainViewModelFactory
+import com.codexo.cryptopeak.viewmodels.MainViewModel
+import com.codexo.cryptopeak.viewmodels.MainViewModelFactory
 import com.codexo.cryptopeak.R
 import com.codexo.cryptopeak.adapters.CoinAdapter
-import com.codexo.cryptopeak.database.CoinData
-import com.codexo.cryptopeak.databinding.FragmentCoinBinding
-import com.codexo.cryptopeak.databinding.FragmentDetailBinding
 import com.codexo.cryptopeak.databinding.FragmentFavoriteBinding
 
 class FavoriteFragment : Fragment(R.layout.fragment_favorite){
@@ -27,11 +23,17 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite){
 
         val viewModelFactory = MainViewModelFactory(requireActivity().application)
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
+        binding?.apply {
+            rvFavorite.apply {
+                adapter = coinAdapter
+                layoutManager = LinearLayoutManager(requireContext())
+                setHasFixedSize(true)
+            }
+        }
 
 
-
-        viewModel.response.observe(requireActivity(), {
-            //todo()
+        viewModel.favoriteCoin.observe(requireActivity(), {
+            coinAdapter.submitList(it)
         })
 
         setHasOptionsMenu(true)

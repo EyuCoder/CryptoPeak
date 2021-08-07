@@ -24,6 +24,9 @@
         <argument
             android:name="selectedItem"
             app:argType="com.codexo.cryptopeak.database.CoinData" />
+        <action
+            android:id="@+id/action_detailFragment_to_coinFragment"
+            app:destination="@id/coinFragment" />
     </fragment>
     <fragment
         android:id="@+id/favoriteFragment"

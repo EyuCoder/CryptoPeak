@@ -5,6 +5,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 import com.codexo.cryptopeak.network.CoinDataContainer
+import java.text.DecimalFormat
+import java.text.NumberFormat
+import java.util.*
 
 @Entity(tableName = "coin_data")
 @Parcelize
@@ -21,8 +24,28 @@ data class CoinData(
     val priceUsd: String?,
     val changePercent24Hr: String?,
     val vwap24Hr: String?,
-    val explorer: String?
-): Parcelable
+    val explorer: String?,
+    var favorite: Boolean = false
+) : Parcelable {
+    val priceUsdFormatted: String
+        get() = NumberFormat
+            .getCurrencyInstance(Locale("en", "US"))
+            .format(priceUsd?.toDouble())
+            .toString()
+
+    val rankFormatted
+        get() = rank.toString()
+
+
+    val changePercent24HrFormatted
+        get() = DecimalFormat("#.##")
+            .apply {
+                maximumFractionDigits = 2
+                isDecimalSeparatorAlwaysShown = true
+            }
+            .format(changePercent24Hr?.toBigDecimal())
+            .toString() + "%"
+}
 
 fun CoinDataContainer.asDomainModel(): List<CoinData> {
     return data.map {
