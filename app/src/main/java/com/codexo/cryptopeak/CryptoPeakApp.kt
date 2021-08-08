@@ -1,11 +1,9 @@
 package com.codexo.cryptopeak
 
 import android.app.Application
+import android.app.PendingIntent
 import android.os.Build
-import android.widget.Toast
-import androidx.lifecycle.lifecycleScope
 import androidx.work.*
-import com.codexo.cryptopeak.workers.LiveUpdateWork
 import com.codexo.cryptopeak.workers.RefreshDataWork
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +12,6 @@ import java.util.concurrent.TimeUnit
 
 open class CryptoPeakApp : Application() {
     private val applicationScope = CoroutineScope(Dispatchers.Default)
-
 
     override fun onCreate() {
         super.onCreate()
@@ -38,7 +35,7 @@ open class CryptoPeakApp : Application() {
                 }
             }.build()
 
-        val repeatingRequest = PeriodicWorkRequestBuilder<RefreshDataWork>(1, TimeUnit.DAYS)
+        val repeatingRequest = PeriodicWorkRequestBuilder<RefreshDataWork>(1, TimeUnit.SECONDS)
             .setConstraints(constraints)
             .build()
 

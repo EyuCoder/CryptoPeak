@@ -3,4 +3,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="cryptocurrency_symbol">cryptocurrency symbol</string>
     <string name="mark_as_favorite_button">Mark as Favorite button</string>
+    <string name="cryptopeak_channel_id">cryptopeak_channel</string>
+    <string name="snooze">snooze</string>
 </resources>
