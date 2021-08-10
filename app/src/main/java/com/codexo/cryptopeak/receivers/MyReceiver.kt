@@ -11,14 +11,14 @@ import com.codexo.cryptopeak.utils.sendNotification
 class MyReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        val notificationManager = ContextCompat.getSystemService(
-            context,
-            NotificationManager::class.java
-        ) as NotificationManager
-
-        notificationManager.sendNotification(
-            context.getText(R.string.app_name).toString(),
-            context
-        )
+//        val notificationManager = ContextCompat.getSystemService(
+//            context,
+//            NotificationManager::class.java
+//        ) as NotificationManager
+//
+//        notificationManager.sendNotification(
+//            context.getText(R.string.app_name).toString(),
+//            context
+//        )
     }
 }

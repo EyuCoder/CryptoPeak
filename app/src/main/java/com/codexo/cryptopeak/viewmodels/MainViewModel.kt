@@ -1,24 +1,23 @@
 package com.codexo.cryptopeak.viewmodels
 
 import android.app.Application
-import android.app.PendingIntent
-import android.content.Context
-import android.content.Intent
 import android.os.Build
 import android.util.Log
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
+import androidx.work.*
 import com.codexo.cryptopeak.database.CoinDatabase.Companion.getDatabase
-import com.codexo.cryptopeak.receivers.MyReceiver
 import com.codexo.cryptopeak.repository.Repository
-import com.codexo.cryptopeak.ui.MainActivity
-import com.codexo.cryptopeak.utils.NetworkUtil.Companion.isNetworkConnected
+import com.codexo.cryptopeak.utils.LIVE_UPDATE_WORK_NAME
+import com.codexo.cryptopeak.workers.LiveUpdateWork
+import com.codexo.cryptopeak.workers.RefreshDataWork
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.concurrent.TimeUnit
 
 enum class NetworkStatus { LOADING, ERROR, DONE }
 
+private val TAG = MainViewModel::class.java.simpleName
 @RequiresApi(Build.VERSION_CODES.N)
 class MainViewModel(application: Application) : ViewModel() {
 
@@ -29,25 +28,21 @@ class MainViewModel(application: Application) : ViewModel() {
     val status: LiveData<NetworkStatus>
         get() = _status
 
-    private val _isConnected = MutableLiveData<Boolean>()
-    private val isConnected: LiveData<Boolean>
-        get() = _isConnected
-
     init {
         viewModelScope.launch {
             do {
                 _status.value = NetworkStatus.LOADING
                 try {
                     repository.refreshCoin()
+                    Log.d(TAG, "REFRESHED")
                     _status.value = NetworkStatus.DONE
                     delay(5000)
-                    initNotification(application)
                 } catch (e: Exception) {
-                    Log.d("CODEXOX", e.message.toString())
+                    Log.d(TAG, e.message.toString())
                     _status.value = NetworkStatus.ERROR
                     delay(10000)
                 }
-                _isConnected.value = isNetworkConnected
+
             } while (true)
         }
     }
@@ -59,21 +54,8 @@ class MainViewModel(application: Application) : ViewModel() {
     fun markAsFavorite(flag: Boolean, id: String) {
         viewModelScope.launch {
             repository.markAsFavorite(!flag, id)
-            Log.d("CODEXOX", "markAsFavorite: clicked")
+            Log.d(TAG, "markAsFavorite: clicked")
         }
-    }
-
-    private lateinit var notifyPendingIntent: PendingIntent
-    private val REQUEST_CODE = 0
-
-    private fun initNotification(context: Context) {
-        val notifyIntent = Intent(context, MyReceiver::class.java)
-        notifyPendingIntent = PendingIntent.getBroadcast(
-            context,
-            REQUEST_CODE,
-            notifyIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT
-        )
     }
 }
 

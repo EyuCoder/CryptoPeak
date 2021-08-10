@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="deploymentTargetDropDown">
+    <targetSelectedWithDropDown>
+      <Target>
+        <type value="BOOT_WITH_SNAPSHOT_TARGET" />
+        <deviceKey>
+          <Key>
+            <type value="VIRTUAL_DEVICE_PATH" />
+            <value value="C:\Users\venom\.android\avd\Pixel_4_API_22.avd" />
+          </Key>
+        </deviceKey>
+        <snapshotKey value="C:\Users\venom\.android\avd\Pixel_4_API_22.avd\snapshots\snap_2021-08-09_15-07-45" />
+      </Target>
+    </targetSelectedWithDropDown>
+    <timeTargetWasSelectedWithDropDown value="2021-08-10T07:32:19.662070600Z" />
+  </component>
+</project>

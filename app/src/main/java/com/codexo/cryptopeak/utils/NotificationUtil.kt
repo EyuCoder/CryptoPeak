@@ -49,7 +49,7 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         .setContentText(messageBody)
         .setContentIntent(contentPendingIntent)
         .setAutoCancel(true)
-        .setStyle(bigPickStyle)
+//        .setStyle(bigPickStyle)
         .setLargeIcon(cryptoPeakImage)
         .setPriority(NotificationCompat.PRIORITY_HIGH)
 //        .addAction(

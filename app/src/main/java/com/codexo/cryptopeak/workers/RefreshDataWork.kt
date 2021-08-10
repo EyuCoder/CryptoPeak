@@ -1,13 +1,20 @@
 package com.codexo.cryptopeak.workers
 
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.util.Log
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import com.codexo.cryptopeak.R
 import com.codexo.cryptopeak.database.CoinDatabase.Companion.getDatabase
 import com.codexo.cryptopeak.receivers.MyReceiver
 import com.codexo.cryptopeak.repository.Repository
+import com.codexo.cryptopeak.ui.MainActivity
+import com.codexo.cryptopeak.utils.sendNotification
 import retrofit2.HttpException
 
 class RefreshDataWork(
@@ -21,6 +28,7 @@ class RefreshDataWork(
         return try {
             repository.refreshCoin()
             initNotification(applicationContext)
+            Log.d("CODEXOX", "doWork: Background refresh once a day")
             Result.success()
         } catch (e: HttpException) {
             Result.failure()
@@ -28,19 +36,19 @@ class RefreshDataWork(
     }
 
     companion object {
-        const val WORK_NAME = "RefreshDataWorker"
+        const val BACKGROUND_WORK_NAME = "RefreshDataWorker"
     }
 }
 
-private lateinit var notifyPendingIntent: PendingIntent
-private val REQUEST_CODE = 0
-
 private fun initNotification(context: Context) {
-    val notifyIntent = Intent(context, MyReceiver::class.java)
-    notifyPendingIntent = PendingIntent.getBroadcast(
+
+    val notificationManager = ContextCompat.getSystemService(
         context,
-        REQUEST_CODE,
-        notifyIntent,
-        PendingIntent.FLAG_UPDATE_CURRENT
+        NotificationManager::class.java
+    ) as NotificationManager
+
+    notificationManager.sendNotification(
+        context.getText(R.string.app_name).toString(),
+        context
     )
 }

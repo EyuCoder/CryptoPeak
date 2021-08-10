@@ -1,7 +1,6 @@
 package com.codexo.cryptopeak
 
 import android.app.Application
-import android.app.PendingIntent
 import android.os.Build
 import androidx.work.*
 import com.codexo.cryptopeak.workers.RefreshDataWork
@@ -26,21 +25,21 @@ open class CryptoPeakApp : Application() {
 
     private fun setupRecurringWork() {
         val constraints = Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.UNMETERED)
+            .setRequiredNetworkType(NetworkType.CONNECTED)
             .setRequiresBatteryNotLow(true)
-            .setRequiresCharging(true)
+            .setRequiresCharging(false)
             .apply {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    setRequiresDeviceIdle(true)
+                    setRequiresDeviceIdle(false)
                 }
             }.build()
 
-        val repeatingRequest = PeriodicWorkRequestBuilder<RefreshDataWork>(1, TimeUnit.SECONDS)
+        val repeatingRequest = PeriodicWorkRequestBuilder<RefreshDataWork>(5, TimeUnit.SECONDS)
             .setConstraints(constraints)
             .build()
 
         WorkManager.getInstance(applicationContext).enqueueUniquePeriodicWork(
-            RefreshDataWork.WORK_NAME,
+            RefreshDataWork.BACKGROUND_WORK_NAME,
             ExistingPeriodicWorkPolicy.KEEP,
             repeatingRequest
         )

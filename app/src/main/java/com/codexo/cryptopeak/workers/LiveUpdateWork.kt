@@ -1,6 +1,8 @@
 package com.codexo.cryptopeak.workers
 
 import android.content.Context
+import android.util.Log
+import android.widget.Toast
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
@@ -12,26 +14,22 @@ import retrofit2.HttpException
 class LiveUpdateWork(context: Context, params: WorkerParameters) :
     CoroutineWorker(context, params) {
 
-    companion object {
-        const val Progress = "LiveUpdateWork"
-        private const val delayDuration = 1L
-    }
-
     override suspend fun doWork(): Result {
         val database = CoinDatabase.getDatabase(applicationContext)
         val repository = Repository(database)
 
-        val firstUpdate = workDataOf(Progress to 0)
-        val lastUpdate = workDataOf(Progress to 100)
-
         return try {
             repository.refreshCoin()
-            setProgress(firstUpdate)
-            delay(delayDuration)
-            setProgress(lastUpdate)
+            Log.d(LIVE_UPDATE_WORK_NAME, "refreshed")
+            Toast.makeText(applicationContext, "UPDATED", Toast.LENGTH_SHORT).show()
             Result.success()
         } catch (e: HttpException) {
+            Log.d(LIVE_UPDATE_WORK_NAME, "failed")
             Result.failure()
         }
+    }
+
+    companion object {
+        const val LIVE_UPDATE_WORK_NAME = "RefreshDataWorker"
     }
 }
