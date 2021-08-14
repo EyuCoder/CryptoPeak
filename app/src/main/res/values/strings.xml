@@ -5,4 +5,6 @@
     <string name="mark_as_favorite_button">Mark as Favorite button</string>
     <string name="cryptopeak_channel_id">cryptopeak_channel</string>
     <string name="snooze">snooze</string>
+    <string name="cypto_coin_logo">Cypto Coin logo</string>
+    <string name="coin_name">Bitcoin(BTC)</string>
 </resources>

@@ -11,7 +11,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.codexo.cryptopeak.R
 import com.codexo.cryptopeak.adapters.CoinAdapter
+import com.codexo.cryptopeak.database.CoinDatabase
 import com.codexo.cryptopeak.databinding.FragmentCoinBinding
+import com.codexo.cryptopeak.repository.Repository
 import com.codexo.cryptopeak.utils.NetworkUtil
 import com.codexo.cryptopeak.viewmodels.MainViewModel
 import com.codexo.cryptopeak.viewmodels.MainViewModelFactory
@@ -24,6 +26,9 @@ class CoinFragment : Fragment(R.layout.fragment_coin) {
     private val binding
         get() = _binding
     private val coinAdapter = CoinAdapter()
+
+    private lateinit var database: CoinDatabase
+    private lateinit var repository: Repository
 
     private lateinit var networkUtil: NetworkUtil
 
@@ -38,7 +43,12 @@ class CoinFragment : Fragment(R.layout.fragment_coin) {
                 setHasFixedSize(true)
             }
         }
-        val viewModelFactory = MainViewModelFactory(requireActivity().application)
+
+        database = CoinDatabase.getDatabase(requireContext().applicationContext)
+        repository = Repository(database)
+
+
+        val viewModelFactory = MainViewModelFactory(database, repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
 
 

@@ -22,9 +22,9 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment?
         val navController = navHostFragment!!.navController
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.detailFragment){
+            if (destination.id == R.id.detailFragment) {
                 bottom_nav.visibility = View.GONE
-            }
+            } else bottom_nav.visibility = View.VISIBLE
         }
 
         val appBarConfiguration = AppBarConfiguration(

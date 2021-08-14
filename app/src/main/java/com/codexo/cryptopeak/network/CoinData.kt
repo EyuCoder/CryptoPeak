@@ -1,11 +1,19 @@
 package com.codexo.cryptopeak.network
 
 import com.codexo.cryptopeak.database.CoinData
+import com.codexo.cryptopeak.database.CoinHistory
 import com.squareup.moshi.JsonClass
 import java.math.BigDecimal
 
 @JsonClass(generateAdapter = true)
 data class CoinDataContainer(val data: List<CoinData>, val timestamp: Long)
+
+@JsonClass(generateAdapter = true)
+data class CoinHistoryContainer(val data: List<CoinHistory>, val timestamp: Long)
+
+fun CoinHistoryContainer.sorted(): List<CoinHistory> {
+    return data.sortedByDescending { it.date }
+}
 
 fun CoinDataContainer.asDatabaseModel(): List<CoinData> {
     return data.map {

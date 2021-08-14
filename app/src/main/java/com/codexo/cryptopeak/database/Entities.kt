@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 import com.codexo.cryptopeak.network.CoinDataContainer
+import java.text.DateFormat
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.util.*
@@ -46,6 +47,21 @@ data class CoinData(
             .format(changePercent24Hr?.toBigDecimal())
             .toString() + "%"
 }
+
+@Parcelize
+data class CoinHistory(
+    val priceUsd: String?,
+    val time: String?,
+    val date: String?,
+
+    ) : Parcelable {
+    val timeFormatted
+        get() = DateFormat.getDateTimeInstance().format(time)
+}
+
+//"priceUsd": "10250.7246875711059188",
+//"time": 1565913600000,
+//"date": "2019-08-16T00:00:00.000Z"
 
 fun CoinDataContainer.asDomainModel(): List<CoinData> {
     return data.map {

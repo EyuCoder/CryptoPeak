@@ -1,28 +1,22 @@
 package com.codexo.cryptopeak.viewmodels
 
-import android.app.Application
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
-import androidx.work.*
-import com.codexo.cryptopeak.database.CoinDatabase.Companion.getDatabase
+import com.codexo.cryptopeak.database.CoinDatabase
 import com.codexo.cryptopeak.repository.Repository
-import com.codexo.cryptopeak.utils.LIVE_UPDATE_WORK_NAME
-import com.codexo.cryptopeak.workers.LiveUpdateWork
-import com.codexo.cryptopeak.workers.RefreshDataWork
+import com.codexo.cryptopeak.utils.NetworkStatus
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.util.concurrent.TimeUnit
-
-enum class NetworkStatus { LOADING, ERROR, DONE }
 
 private val TAG = MainViewModel::class.java.simpleName
-@RequiresApi(Build.VERSION_CODES.N)
-class MainViewModel(application: Application) : ViewModel() {
 
-    private val database = getDatabase(application)
-    private val repository = Repository(database)
+@RequiresApi(Build.VERSION_CODES.N)
+class MainViewModel(
+    private val database: CoinDatabase,
+    private val repository: Repository
+) : ViewModel() {
 
     private val _status = MutableLiveData<NetworkStatus>()
     val status: LiveData<NetworkStatus>
@@ -59,9 +53,12 @@ class MainViewModel(application: Application) : ViewModel() {
     }
 }
 
-class MainViewModelFactory(private val application: Application) : ViewModelProvider.Factory {
+class MainViewModelFactory(
+    private val database: CoinDatabase,
+    private val repository: Repository
+) : ViewModelProvider.Factory {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return MainViewModel(application) as T
+        return MainViewModel(database, repository) as T
     }
 }
