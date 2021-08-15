@@ -10,6 +10,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.codexo.cryptopeak.R
 import com.codexo.cryptopeak.database.CoinData
 import com.codexo.cryptopeak.ui.CoinFragmentDirections
+import com.codexo.cryptopeak.utils.ICON_URL
 import java.util.*
 
 class BindingAdapter {
@@ -18,7 +19,7 @@ class BindingAdapter {
         @JvmStatic
         fun bindImage(imgView: ImageView, imgUrl: String?) {
             val url =
-                "https://assets.coincap.io/assets/icons/${imgUrl?.lowercase(Locale.getDefault())}@2x.png"
+                "$ICON_URL${imgUrl?.lowercase(Locale.getDefault())}@2x.png"
             url.let {
                 val imgUri = url.toUri().buildUpon().scheme("https").build()
                 Glide.with(imgView.context)

@@ -46,6 +46,8 @@ data class CoinData(
             }
             .format(changePercent24Hr?.toBigDecimal())
             .toString() + "%"
+    val nameFormatted
+        get() = "$rank. $name($symbol)"
 }
 
 @Parcelize

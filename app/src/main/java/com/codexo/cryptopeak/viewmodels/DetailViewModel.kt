@@ -4,6 +4,7 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
+import com.codexo.cryptopeak.database.CoinData
 import com.codexo.cryptopeak.database.CoinDatabase
 import com.codexo.cryptopeak.database.CoinHistory
 import com.codexo.cryptopeak.repository.Repository
@@ -16,7 +17,8 @@ class DetailViewModel(
     private val database: CoinDatabase, private val repository: Repository
 ) : ViewModel() {
 
-    var coinId = MutableLiveData<String>()
+    private lateinit var _coinDetail: LiveData<CoinData>
+    val coinDetail get() = _coinDetail
 
     private var _coinHistory = MutableLiveData<List<CoinHistory>>()
     val coinHistory get() = _coinHistory
@@ -25,11 +27,18 @@ class DetailViewModel(
     val status: LiveData<NetworkStatus>
         get() = _status
 
-    fun refreshHistory() {
+    fun getCoinDetails(coinId: String) {
+        viewModelScope.launch {
+            _coinDetail = repository.getCoinDetail(coinId)
+        }
+        refreshHistory(coinId)
+    }
+
+    fun refreshHistory(coinId: String) {
         viewModelScope.launch {
             _status.value = NetworkStatus.LOADING
             try {
-                _coinHistory.value = repository.getCoinHistory(coinId.value!!)
+                _coinHistory.value = repository.getCoinHistory(coinId)
                 _status.value = NetworkStatus.DONE
             } catch (e: Exception) {
                 Log.d(TAG, e.message.toString())

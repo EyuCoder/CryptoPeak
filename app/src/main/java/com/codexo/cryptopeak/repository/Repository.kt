@@ -12,8 +12,10 @@ import kotlinx.coroutines.withContext
 
 class Repository(private val database: CoinDatabase) {
 
-    val coinData: LiveData<List<CoinData>> = database.dao.getAllCoin()
+    val coinData: LiveData<List<CoinData>> = database.dao.getAllCoins()
     val favoriteCoin: LiveData<List<CoinData>> = database.dao.getFavCoin()
+
+    fun getCoinDetail(id: String): LiveData<CoinData> = database.dao.getCoin(id)
 
     suspend fun refreshCoin() {
         withContext(Dispatchers.IO) {
