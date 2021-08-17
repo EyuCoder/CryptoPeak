@@ -29,4 +29,5 @@ object Network {
         .build()
 
     val coinCap: Service = retrofit.create(Service::class.java)
+
 }
