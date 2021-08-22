@@ -1,6 +1,19 @@
 # CryptoPeak
 
-### Cryptocurrency Exchange rate Tracker Android app with live updates.
+## Cryptocurrency Exchange rate Tracker Android app with live updates.
+
+### Made With
+- Android jetpack Libraries
+- Dagger
+- Robinhood Spark
+- Retrofit2 ...
+
+
+
+
+
+
+
 
 *LICENSE*
 
