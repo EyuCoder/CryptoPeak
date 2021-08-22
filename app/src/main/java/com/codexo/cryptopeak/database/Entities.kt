@@ -8,6 +8,7 @@ import com.codexo.cryptopeak.network.CoinDataContainer
 import java.text.DateFormat
 import java.text.DecimalFormat
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
 import java.util.*
 
 @Entity(tableName = "coin_data")
@@ -61,6 +62,12 @@ data class CoinHistory(
     ) : Parcelable {
     val timeFormatted
         get() = formatTime(time)
+
+    val dateFormatted: String
+        get() = formatDate(date.toString())
+
+    val priceFormatted: String
+        get() = formatCurrency(priceUsd?.toDouble())
 }
 
 
@@ -104,6 +111,14 @@ private fun formatNumber(number: Double?): String {
     return NumberFormat
         .getNumberInstance(Locale.US)
         .format(number)
+}
+
+private fun formatDate(date: String): String {
+    val outputFormat: DateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.US)
+    val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US)
+
+    val dateParced = inputFormat.parse(date)
+    return outputFormat.format(dateParced)
 }
 
 private fun formatTime(time: String?): String {

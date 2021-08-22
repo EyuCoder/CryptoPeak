@@ -7,4 +7,8 @@
     <string name="snooze">snooze</string>
     <string name="cypto_coin_logo">Cypto Coin logo</string>
     <string name="coin_name">Bitcoin(BTC)</string>
+    <string name="one_week">1W</string>
+    <string name="one_month">1M</string>
+    <string name="one_year">1Y</string>
+    <string name="all">ALL</string>
 </resources>

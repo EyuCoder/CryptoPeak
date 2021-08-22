@@ -5,21 +5,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+<!--    android:layerType="software"-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         tools:context=".ui.CoinFragment">
 
+        <TextView
+            android:id="@+id/tv_chart_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="$43,348" />
+
+        <TextView
+            android:id="@+id/tv_chart_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@+id/tv_chart_price"
+            app:layout_constraintStart_toStartOf="@+id/tv_chart_price"
+            app:layout_constraintTop_toBottomOf="@+id/tv_chart_price"
+            tools:text="Aug 3, 2933" />
 
         <com.robinhood.spark.SparkView
             android:id="@+id/sparkview_history"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="200dp"
             android:layout_margin="@dimen/margin_medium"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_chart_date"
             app:spark_lineColor="@color/design_default_color_primary" />
 
 
@@ -33,6 +53,42 @@
             app:layout_constraintStart_toStartOf="@+id/sparkview_history"
             app:layout_constraintTop_toTopOf="@+id/sparkview_history" />
 
+        <RadioGroup
+            android:id="@+id/rg_timeIntervals"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="@+id/sparkview_history"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sparkview_history">
+
+            <RadioButton
+                android:id="@+id/rb_week"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/one_week" />
+
+            <RadioButton
+                android:id="@+id/rb_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/one_month" />
+
+            <RadioButton
+                android:id="@+id/rb_year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/one_year" />
+
+            <RadioButton
+                android:id="@+id/rb_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/all" />
+        </RadioGroup>
+
+
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,7 +98,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sparkview_history">
+            app:layout_constraintTop_toBottomOf="@+id/rg_timeIntervals">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -70,10 +126,10 @@
                     tools:text="@string/coin_name" />
 
                 <TableLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_medium"
-                    android:stretchColumns="1"
+                    android:stretchColumns="*"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/iv_logo">
@@ -88,6 +144,8 @@
                             android:id="@+id/tv_rank"
                             android:gravity="end"
                             tools:text="TextView" />
+
+                        <View android:layout_gravity="end" />
                     </TableRow>
 
                     <TableRow android:layout_margin="@dimen/margin_medium">

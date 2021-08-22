@@ -59,7 +59,7 @@ class CoinFragment : Fragment(R.layout.fragment_coin) {
 //            Snackbar.make(requireView(), it.toString(), Snackbar.LENGTH_LONG).show()
 //        })
 
-        checkInternet()
+        //checkInternet()
     }
 
     private fun checkInternet() {

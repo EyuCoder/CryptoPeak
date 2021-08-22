@@ -9,16 +9,20 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.codexo.cryptopeak.R
 import com.codexo.cryptopeak.adapters.BindingAdapter
+import com.codexo.cryptopeak.adapters.CoinDetailAdapter
 import com.codexo.cryptopeak.database.CoinDatabase
+import com.codexo.cryptopeak.database.CoinHistory
 import com.codexo.cryptopeak.databinding.FragmentDetailBinding
 import com.codexo.cryptopeak.repository.Repository
 import com.codexo.cryptopeak.utils.NetworkStatus
+import com.codexo.cryptopeak.utils.TimeInterval
 import com.codexo.cryptopeak.viewmodels.DetailViewModel
 import com.codexo.cryptopeak.viewmodels.DetailViewModel.DetailViewModelFactory
 import kotlinx.android.synthetic.main.fragment_detail.*
 
 
 class DetailFragment : Fragment(R.layout.fragment_detail) {
+    private lateinit var adapter: CoinDetailAdapter
     private val args: DetailFragmentArgs by navArgs()
     private lateinit var viewModel: DetailViewModel
     private var binding: FragmentDetailBinding? = null
@@ -38,15 +42,51 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         viewModel = ViewModelProvider(this, viewModelFactory).get(DetailViewModel::class.java)
 
         viewModel.getCoinDetails(args.selectedItem.id)
-        viewModel.refreshHistory(args.selectedItem.id)
 
+        initUI()
+        eventListeners()
+        setHasOptionsMenu(true)
+    }
 
-        viewModel.coinHistory.observe(viewLifecycleOwner, {
-            //binding!!.tvCoinName.text = it[0].priceUsd
+    private fun eventListeners() {
+        binding!!.sparkviewHistory.apply {
+            isScrubEnabled = true
+            setScrubListener { item ->
+                if (item is CoinHistory) {
+                    updateInfoForDate(item)
+                }
+            }
+        }
 
+        binding?.rgTimeIntervals?.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.rb_week -> updateTimeInterval(TimeInterval.WEEK)
+                R.id.rb_month -> updateTimeInterval(TimeInterval.MONTH)
+                R.id.rb_year -> updateTimeInterval(TimeInterval.YEAR)
+                R.id.rb_all -> updateTimeInterval(TimeInterval.ALL)
+            }
+        }
+    }
+
+    private fun updateTimeInterval(interval: TimeInterval) {
+        //reloadLineChart()
+        adapter.timeInterval = interval
+        adapter.notifyDataSetChanged()
+    }
+
+    private fun reloadLineChart(){
+        viewModel.getCoinDetails(args.selectedItem.id)
+    }
+
+    private fun initUI() {
+
+        viewModel.coinHistory.observe(viewLifecycleOwner, { coinHistory ->
+            adapter = CoinDetailAdapter(coinHistory.reversed())
+            binding?.sparkviewHistory?.adapter = adapter
+            updateInfoForDate(coinHistory.last())
         })
 
-        viewModel.coinDetail.observe(viewLifecycleOwner, {coinDetail ->
+        viewModel.coinDetail.observe(viewLifecycleOwner, { coinDetail ->
 
             binding?.apply {
                 tvCoinName.text = coinDetail.nameFormatted
@@ -67,8 +107,13 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                 NetworkStatus.ERROR -> binding!!.pbHistoryLoading.visibility = View.GONE
             }
         })
+    }
 
-        setHasOptionsMenu(true)
+    private fun updateInfoForDate(item: CoinHistory) {
+        binding?.apply {
+            tvChartPrice.text = item.priceFormatted
+            tvChartDate.text = item.dateFormatted
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
