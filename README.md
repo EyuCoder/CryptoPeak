@@ -16,6 +16,7 @@
 
 
 *LICENSE*
+This project is released under the Apache 2.0 license. See [LICENSE](./LICENSE) for details.
 
 ```Copyright``` &copy; 2021 [Eyuel Dan](https://github.com/elysium09)
 
