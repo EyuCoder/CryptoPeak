@@ -29,23 +29,25 @@ data class CoinData(
     var favorite: Boolean = false
 ) : Parcelable {
     val priceUsdFormatted: String
-        get() = NumberFormat
-            .getCurrencyInstance(Locale("en", "US"))
-            .format(priceUsd?.toDouble())
-            .toString()
+        get() = formatCurrency(priceUsd?.toDouble())
 
-    val rankFormatted
-        get() = rank.toString()
+    val rankFormatted get() = rank.toString()
 
+    val vwap24HrFormatted: String
+        get() = formatCurrency(vwap24Hr?.toDouble())
+
+    val volumeUsd24HrFormatted: String
+        get() = formatCurrency(volumeUsd24Hr?.toDouble())
 
     val changePercent24HrFormatted
-        get() = DecimalFormat("#.##")
-            .apply {
-                maximumFractionDigits = 2
-                isDecimalSeparatorAlwaysShown = true
-            }
-            .format(changePercent24Hr?.toBigDecimal())
-            .toString() + "%"
+        get() = formatPercentage(changePercent24Hr?.toDouble())
+
+    val marketCapUsdFormatted: String
+        get() = formatCurrency(marketCapUsd?.toDouble())
+
+    val supplyFormatted: String
+        get() = formatNumber(supply?.toDouble())
+
     val nameFormatted
         get() = "$rank. $name($symbol)"
 }
@@ -58,12 +60,9 @@ data class CoinHistory(
 
     ) : Parcelable {
     val timeFormatted
-        get() = DateFormat.getDateTimeInstance().format(time)
+        get() = formatTime(time)
 }
 
-//"priceUsd": "10250.7246875711059188",
-//"time": 1565913600000,
-//"date": "2019-08-16T00:00:00.000Z"
 
 fun CoinDataContainer.asDomainModel(): List<CoinData> {
     return data.map {
@@ -82,4 +81,31 @@ fun CoinDataContainer.asDomainModel(): List<CoinData> {
             explorer = it.explorer
         )
     }
+}
+
+private fun formatCurrency(currency: Double?): String {
+    return NumberFormat
+        .getCurrencyInstance(Locale("en", "US"))
+        .format(currency)
+        .toString()
+}
+
+private fun formatPercentage(percent: Double?): String {
+    return DecimalFormat("#.##")
+        .apply {
+            maximumFractionDigits = 2
+            isDecimalSeparatorAlwaysShown = true
+        }
+        .format(percent?.toBigDecimal())
+        .toString() + "%"
+}
+
+private fun formatNumber(number: Double?): String {
+    return NumberFormat
+        .getNumberInstance(Locale.US)
+        .format(number)
+}
+
+private fun formatTime(time: String?): String {
+    return DateFormat.getDateTimeInstance().format(time)
 }

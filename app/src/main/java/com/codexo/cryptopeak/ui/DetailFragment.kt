@@ -51,10 +51,10 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             binding?.apply {
                 tvCoinName.text = coinDetail.nameFormatted
                 tvRank.text = coinDetail.rank.toString()
-                tvMarketCap.text = coinDetail.marketCapUsd
-                tvVwap24hr.text = coinDetail.vwap24Hr
-                tvSupply.text = coinDetail.supply
-                tvVolume24hr.text = coinDetail.vwap24Hr
+                tvMarketCap.text = coinDetail.marketCapUsdFormatted
+                tvVwap24hr.text = coinDetail.vwap24HrFormatted
+                tvSupply.text = coinDetail.supplyFormatted
+                tvVolume24hr.text = coinDetail.volumeUsd24HrFormatted
                 tvChange24hr.text = coinDetail.changePercent24HrFormatted
                 BindingAdapter.bindImage(ivLogo, coinDetail.symbol)
             }
