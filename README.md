@@ -1,5 +1,6 @@
 # CryptoPeak
 
+### Cryptocurrency Exchange rate Tracker Android app with live updates.
 
 *LICENSE*
 
