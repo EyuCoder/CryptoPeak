@@ -1,19 +1,14 @@
 package com.codexo.cryptopeak.workers
 
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import android.util.Log
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.codexo.cryptopeak.R
 import com.codexo.cryptopeak.database.CoinDatabase.Companion.getDatabase
-import com.codexo.cryptopeak.receivers.MyReceiver
 import com.codexo.cryptopeak.repository.Repository
-import com.codexo.cryptopeak.ui.MainActivity
 import com.codexo.cryptopeak.utils.sendNotification
 import retrofit2.HttpException
 

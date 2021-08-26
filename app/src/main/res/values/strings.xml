@@ -11,4 +11,8 @@
     <string name="one_month">1M</string>
     <string name="one_year">1Y</string>
     <string name="all">ALL</string>
+
+    <string name="coinFragment">coinFragment</string>
+    <string name="favoriteFragment">favoriteFragment</string>
+
 </resources>

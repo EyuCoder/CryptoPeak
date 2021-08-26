@@ -10,6 +10,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.codexo.cryptopeak.R
 import com.codexo.cryptopeak.database.CoinData
 import com.codexo.cryptopeak.ui.CoinFragmentDirections
+import com.codexo.cryptopeak.ui.FavoriteFragmentDirections
 import com.codexo.cryptopeak.utils.ICON_URL
 import java.util.*
 
@@ -33,13 +34,23 @@ class BindingAdapter {
             }
         }
 
-        @BindingAdapter("open_detail")
+        @BindingAdapter(value = ["open_detail", "navigate_from"], requireAll = true)
         @JvmStatic
-        fun openDetail(view: ConstraintLayout, currentItem: CoinData) {
-            view.setOnClickListener {
-                val action = CoinFragmentDirections.actionCoinFragmentToDetailFragment(currentItem)
-                view.findNavController().navigate(action)
+        fun navigateToDetail(view: ConstraintLayout, currentItem: CoinData, navigateFrom: String) {
+            val action = when (navigateFrom){
+                "coinFragment" -> CoinFragmentDirections.actionCoinFragmentToDetailFragment(currentItem)
+                "favoriteFragment" -> FavoriteFragmentDirections.actionFavoriteFragmentToDetailFragment(currentItem)
+                else -> return
             }
+            view.setOnClickListener {view.findNavController().navigate(action) }
+        }
+
+        @BindingAdapter("android:is_favorite")
+        @JvmStatic
+        fun isFavorite(img: ImageView, marked: Boolean) {
+            if (marked) {
+                img.setImageResource(R.drawable.ic_favorite_on)
+            } else img.setImageResource(R.drawable.ic_favorite_off)
         }
     }
 }

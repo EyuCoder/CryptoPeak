@@ -20,6 +20,13 @@ class Repository(private val database: CoinDatabase) {
     suspend fun refreshCoin() {
         withContext(Dispatchers.IO) {
             val coinData = Network.coinCap.getAssets()
+            database.dao.updateAll(coinData.body()!!.asDatabaseModel())
+        }
+    }
+
+    suspend fun addCoin() {
+        withContext(Dispatchers.IO) {
+            val coinData = Network.coinCap.getAssets()
             database.dao.insertAll(coinData.body()!!.asDatabaseModel())
         }
     }

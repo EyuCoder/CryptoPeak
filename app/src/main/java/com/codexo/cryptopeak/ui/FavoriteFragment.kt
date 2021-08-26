@@ -13,12 +13,12 @@ import com.codexo.cryptopeak.database.CoinDatabase
 import com.codexo.cryptopeak.databinding.FragmentFavoriteBinding
 import com.codexo.cryptopeak.repository.Repository
 
-class FavoriteFragment : Fragment(R.layout.fragment_favorite) {
+class FavoriteFragment : Fragment(R.layout.fragment_favorite), CoinAdapter.OnItemClickListener {
     private lateinit var viewModel: MainViewModel
     private var _binding: FragmentFavoriteBinding? = null
     private val binding
         get() = _binding
-    private val coinAdapter = CoinAdapter()
+    private val coinAdapter = CoinAdapter(this)
     private lateinit var database: CoinDatabase
     private lateinit var repository: Repository
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,6 +35,7 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite) {
                 layoutManager = LinearLayoutManager(requireContext())
                 setHasFixedSize(true)
             }
+
         }
 
 
@@ -45,9 +46,12 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite) {
         setHasOptionsMenu(true)
     }
 
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onFavoriteClicked(markedFavorite: Boolean, id: String) {
+        viewModel.markAsFavorite(markedFavorite, id)
     }
 }

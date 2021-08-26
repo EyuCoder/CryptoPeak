@@ -27,7 +27,7 @@ data class CoinData(
     val changePercent24Hr: String?,
     val vwap24Hr: String?,
     val explorer: String?,
-    var favorite: Boolean = false
+    var favorite: Boolean= false
 ) : Parcelable {
     val priceUsdFormatted: String
         get() = formatCurrency(priceUsd?.toDouble())

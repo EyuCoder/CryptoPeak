@@ -3,8 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/VENOM/StudioProjects/CryptoPeak/app/src/main/res/drawable/ic_favorite_off.xml" value="0.19427083333333334" />
+        <entry key="..\:/Users/VENOM/StudioProjects/CryptoPeak/app/src/main/res/drawable/ic_favorite_on.xml" value="0.19427083333333334" />
         <entry key="..\:/Users/VENOM/StudioProjects/CryptoPeak/app/src/main/res/layout/activity_main.xml" value="0.17346014492753623" />
+        <entry key="..\:/Users/VENOM/StudioProjects/CryptoPeak/app/src/main/res/layout/fragment_coin.xml" value="0.178125" />
         <entry key="..\:/Users/VENOM/StudioProjects/CryptoPeak/app/src/main/res/layout/fragment_detail.xml" value="0.2" />
+        <entry key="..\:/Users/VENOM/StudioProjects/CryptoPeak/app/src/main/res/layout/fragment_favorite.xml" value="0.1" />
+        <entry key="..\:/Users/VENOM/StudioProjects/CryptoPeak/app/src/main/res/layout/layout_item.xml" value="0.178125" />
+        <entry key="..\:/Users/VENOM/StudioProjects/CryptoPeak/app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
         <entry key="..\:/Users/venom/StudioProjects/CryptoPeak/app/src/main/res/drawable-v24/ic_broken_image.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/venom/StudioProjects/CryptoPeak/app/src/main/res/drawable-v24/loading_img.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/venom/StudioProjects/CryptoPeak/app/src/main/res/layout/activity_main.xml" value="0.17395833333333333" />

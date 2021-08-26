@@ -31,5 +31,9 @@
     <fragment
         android:id="@+id/favoriteFragment"
         android:name="com.codexo.cryptopeak.ui.FavoriteFragment"
-        android:label="FavoriteFragment" />
+        android:label="FavoriteFragment" >
+        <action
+            android:id="@+id/action_favoriteFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
 </navigation>

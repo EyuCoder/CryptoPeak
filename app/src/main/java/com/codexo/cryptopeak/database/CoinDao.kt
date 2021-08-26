@@ -1,10 +1,7 @@
 package com.codexo.cryptopeak.database
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface CoinDao {
@@ -19,6 +16,9 @@ interface CoinDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(coinData: List<CoinData>)
+
+    @Update
+    suspend fun updateAll(coinData: List<CoinData>)
 
     @Query("UPDATE coin_data SET favorite = :fave WHERE id = :id")
     suspend fun markAsFavorite(fave: Boolean, id: String)

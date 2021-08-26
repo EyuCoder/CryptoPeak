@@ -1,6 +1,5 @@
 package com.codexo.cryptopeak.ui
 
-import android.app.Application
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -19,13 +18,12 @@ import com.codexo.cryptopeak.viewmodels.MainViewModel
 import com.codexo.cryptopeak.viewmodels.MainViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 
-
-class CoinFragment : Fragment(R.layout.fragment_coin) {
+class CoinFragment : Fragment(R.layout.fragment_coin), CoinAdapter.OnItemClickListener {
     private lateinit var viewModel: MainViewModel
     private var _binding: FragmentCoinBinding? = null
     private val binding
         get() = _binding
-    private val coinAdapter = CoinAdapter()
+    private val coinAdapter = CoinAdapter(this)
 
     private lateinit var database: CoinDatabase
     private lateinit var repository: Repository
@@ -79,5 +77,9 @@ class CoinFragment : Fragment(R.layout.fragment_coin) {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onFavoriteClicked(markedFavorite: Boolean, id: String) {
+        viewModel.markAsFavorite(markedFavorite, id)
     }
 }

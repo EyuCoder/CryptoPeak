@@ -12,7 +12,6 @@ import kotlinx.coroutines.launch
 
 private val TAG = MainViewModel::class.java.simpleName
 
-@RequiresApi(Build.VERSION_CODES.N)
 class MainViewModel(
     private val database: CoinDatabase,
     private val repository: Repository
@@ -47,7 +46,7 @@ class MainViewModel(
 
     fun markAsFavorite(flag: Boolean, id: String) {
         viewModelScope.launch {
-            repository.markAsFavorite(!flag, id)
+            repository.markAsFavorite(flag, id)
             Log.d(TAG, "markAsFavorite: clicked")
         }
     }

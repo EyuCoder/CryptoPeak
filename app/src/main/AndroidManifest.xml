@@ -15,10 +15,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CryptoPeak">
-        <receiver
-            android:name=".receivers.MyReceiver"
-            android:enabled="true"
-            android:exported="false" />
 
         <activity
             android:name=".ui.MainActivity"
