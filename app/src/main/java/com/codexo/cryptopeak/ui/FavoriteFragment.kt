@@ -4,14 +4,16 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.codexo.cryptopeak.viewmodels.MainViewModel
 import com.codexo.cryptopeak.viewmodels.MainViewModelFactory
 import com.codexo.cryptopeak.R
 import com.codexo.cryptopeak.adapters.CoinAdapter
-import com.codexo.cryptopeak.database.CoinDatabase
+import com.codexo.cryptopeak.data.database.CoinData
+import com.codexo.cryptopeak.data.database.CoinDatabase
 import com.codexo.cryptopeak.databinding.FragmentFavoriteBinding
-import com.codexo.cryptopeak.repository.Repository
+import com.codexo.cryptopeak.data.Repository
 
 class FavoriteFragment : Fragment(R.layout.fragment_favorite), CoinAdapter.OnItemClickListener {
     private lateinit var viewModel: MainViewModel
@@ -38,7 +40,6 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite), CoinAdapter.OnIte
 
         }
 
-
         viewModel.favoriteCoin.observe(requireActivity(), {
             coinAdapter.submitList(it)
         })
@@ -53,5 +54,9 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite), CoinAdapter.OnIte
 
     override fun onFavoriteClicked(markedFavorite: Boolean, id: String) {
         viewModel.markAsFavorite(markedFavorite, id)
+    }
+    override fun onOpenDetail(currentItem: CoinData) {
+        val action = FavoriteFragmentDirections.actionFavoriteFragmentToDetailFragment(currentItem)
+        findNavController().navigate(action)
     }
 }

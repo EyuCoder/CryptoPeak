@@ -1,7 +1,7 @@
 package com.codexo.cryptopeak.adapters
 
 import androidx.recyclerview.widget.DiffUtil
-import com.codexo.cryptopeak.database.CoinData
+import com.codexo.cryptopeak.data.database.CoinData
 
 object DiffCallback : DiffUtil.ItemCallback<CoinData>() {
     override fun areItemsTheSame(oldItem: CoinData, newItem: CoinData): Boolean {

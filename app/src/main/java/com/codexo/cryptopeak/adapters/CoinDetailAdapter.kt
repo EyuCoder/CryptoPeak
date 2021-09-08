@@ -1,7 +1,7 @@
 package com.codexo.cryptopeak.adapters
 
 import android.graphics.RectF
-import com.codexo.cryptopeak.database.CoinHistory
+import com.codexo.cryptopeak.data.database.CoinHistory
 import com.codexo.cryptopeak.utils.TimeInterval
 import com.robinhood.spark.SparkAdapter
 

@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/coinFragment"
         android:name="com.codexo.cryptopeak.ui.CoinFragment"
-        android:label="fragment_coin"
+        android:label="CryptoPeak"
         tools:layout="@layout/fragment_coin" >
         <action
             android:id="@+id/action_coinFragment_to_detailFragment"
@@ -20,10 +20,10 @@
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.codexo.cryptopeak.ui.DetailFragment"
-        android:label="DetailFragment" >
+        android:label="" >
         <argument
             android:name="selectedItem"
-            app:argType="com.codexo.cryptopeak.database.CoinData" />
+            app:argType="com.codexo.cryptopeak.data.database.CoinData" />
         <action
             android:id="@+id/action_detailFragment_to_coinFragment"
             app:destination="@id/coinFragment" />
@@ -31,7 +31,7 @@
     <fragment
         android:id="@+id/favoriteFragment"
         android:name="com.codexo.cryptopeak.ui.FavoriteFragment"
-        android:label="FavoriteFragment" >
+        android:label="Favorites" >
         <action
             android:id="@+id/action_favoriteFragment_to_detailFragment"
             app:destination="@id/detailFragment" />

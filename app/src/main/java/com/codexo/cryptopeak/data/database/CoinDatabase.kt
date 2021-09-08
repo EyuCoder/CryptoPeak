@@ -1,4 +1,4 @@
-package com.codexo.cryptopeak.database
+package com.codexo.cryptopeak.data.database
 
 import android.content.Context
 import androidx.room.Database

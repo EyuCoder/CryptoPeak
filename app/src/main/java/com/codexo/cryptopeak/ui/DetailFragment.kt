@@ -10,10 +10,10 @@ import androidx.navigation.fragment.navArgs
 import com.codexo.cryptopeak.R
 import com.codexo.cryptopeak.adapters.BindingAdapter
 import com.codexo.cryptopeak.adapters.CoinDetailAdapter
-import com.codexo.cryptopeak.database.CoinDatabase
-import com.codexo.cryptopeak.database.CoinHistory
+import com.codexo.cryptopeak.data.database.CoinDatabase
+import com.codexo.cryptopeak.data.database.CoinHistory
 import com.codexo.cryptopeak.databinding.FragmentDetailBinding
-import com.codexo.cryptopeak.repository.Repository
+import com.codexo.cryptopeak.data.Repository
 import com.codexo.cryptopeak.utils.NetworkStatus
 import com.codexo.cryptopeak.utils.TimeInterval
 import com.codexo.cryptopeak.viewmodels.DetailViewModel
@@ -83,19 +83,20 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         viewModel.coinHistory.observe(viewLifecycleOwner, { coinHistory ->
             adapter = CoinDetailAdapter(coinHistory.reversed())
             binding?.sparkviewHistory?.adapter = adapter
-            updateInfoForDate(coinHistory.last())
+            updateInfoForDate(coinHistory.first())
         })
 
         viewModel.coinDetail.observe(viewLifecycleOwner, { coinDetail ->
 
             binding?.apply {
                 tvCoinName.text = coinDetail.nameFormatted
-                tvRank.text = coinDetail.rank.toString()
+                tvRank.text = coinDetail.rankFormatted
                 tvMarketCap.text = coinDetail.marketCapUsdFormatted
                 tvVwap24hr.text = coinDetail.vwap24HrFormatted
                 tvSupply.text = coinDetail.supplyFormatted
                 tvVolume24hr.text = coinDetail.volumeUsd24HrFormatted
                 tvChange24hr.text = coinDetail.changePercent24HrFormatted
+                tvChartPrice.text = coinDetail.priceUsdFormatted
                 BindingAdapter.bindImage(ivLogo, coinDetail.symbol)
             }
         })

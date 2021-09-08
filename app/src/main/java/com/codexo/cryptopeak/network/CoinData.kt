@@ -1,9 +1,8 @@
 package com.codexo.cryptopeak.network
 
-import com.codexo.cryptopeak.database.CoinData
-import com.codexo.cryptopeak.database.CoinHistory
+import com.codexo.cryptopeak.data.database.CoinData
+import com.codexo.cryptopeak.data.database.CoinHistory
 import com.squareup.moshi.JsonClass
-import java.math.BigDecimal
 
 @JsonClass(generateAdapter = true)
 data class CoinDataContainer(val data: List<CoinData>, val timestamp: Long)
@@ -29,7 +28,8 @@ fun CoinDataContainer.asDatabaseModel(): List<CoinData> {
             priceUsd = it.priceUsd,
             changePercent24Hr = it.changePercent24Hr,
             vwap24Hr = it.vwap24Hr,
-            explorer = it.explorer
+            explorer = it.explorer,
+            favorite = false
         )
     }
 }

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="coinData"
-            type="com.codexo.cryptopeak.database.CoinData" />
+            type="com.codexo.cryptopeak.data.database.CoinData" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -15,8 +15,7 @@
         android:layout_margin="@dimen/margin_small">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            open_detail="@{coinData}"
-            navigate_from ="@{@string/coinFragment}"
+            android:id="@+id/item_cointraint_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 

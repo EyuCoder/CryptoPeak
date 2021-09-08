@@ -7,12 +7,14 @@ import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.codexo.cryptopeak.R
 import com.codexo.cryptopeak.adapters.CoinAdapter
-import com.codexo.cryptopeak.database.CoinDatabase
+import com.codexo.cryptopeak.data.database.CoinData
+import com.codexo.cryptopeak.data.database.CoinDatabase
 import com.codexo.cryptopeak.databinding.FragmentCoinBinding
-import com.codexo.cryptopeak.repository.Repository
+import com.codexo.cryptopeak.data.Repository
 import com.codexo.cryptopeak.utils.NetworkUtil
 import com.codexo.cryptopeak.viewmodels.MainViewModel
 import com.codexo.cryptopeak.viewmodels.MainViewModelFactory
@@ -53,9 +55,9 @@ class CoinFragment : Fragment(R.layout.fragment_coin), CoinAdapter.OnItemClickLi
         viewModel.coinData.observe(viewLifecycleOwner, {
             coinAdapter.submitList(it)
         })
-//        viewModel.status.observe(requireActivity(), {
-//            Snackbar.make(requireView(), it.toString(), Snackbar.LENGTH_LONG).show()
-//        })
+        viewModel.dataCount.observe(requireActivity(), {
+            viewModel.count = it ?:0
+        })
 
         //checkInternet()
     }
@@ -81,5 +83,10 @@ class CoinFragment : Fragment(R.layout.fragment_coin), CoinAdapter.OnItemClickLi
 
     override fun onFavoriteClicked(markedFavorite: Boolean, id: String) {
         viewModel.markAsFavorite(markedFavorite, id)
+    }
+
+    override fun onOpenDetail(currentItem: CoinData) {
+        val action = CoinFragmentDirections.actionCoinFragmentToDetailFragment(currentItem)
+        findNavController().navigate(action)
     }
 }

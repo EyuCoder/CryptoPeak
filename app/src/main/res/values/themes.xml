@@ -12,5 +12,10 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="radioButtonStyle">@style/customRadioButton</item>
+    </style>
+    <style name="customRadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:background">@drawable/radio_background_selector</item>
+        <item name="android:button">@null</item>
     </style>
 </resources>

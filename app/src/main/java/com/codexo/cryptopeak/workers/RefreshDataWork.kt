@@ -7,8 +7,8 @@ import androidx.core.content.ContextCompat
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.codexo.cryptopeak.R
-import com.codexo.cryptopeak.database.CoinDatabase.Companion.getDatabase
-import com.codexo.cryptopeak.repository.Repository
+import com.codexo.cryptopeak.data.database.CoinDatabase.Companion.getDatabase
+import com.codexo.cryptopeak.data.Repository
 import com.codexo.cryptopeak.utils.sendNotification
 import retrofit2.HttpException
 
@@ -21,7 +21,7 @@ class RefreshDataWork(
         val repository = Repository(database)
 
         return try {
-            repository.refreshCoin()
+            repository.updateCoin()
             initNotification(applicationContext)
             Log.d("CODEXOX", "doWork: Background refresh once a day")
             Result.success()

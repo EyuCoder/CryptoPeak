@@ -1,4 +1,4 @@
-package com.codexo.cryptopeak.database
+package com.codexo.cryptopeak.data.database
 
 import android.os.Parcelable
 import androidx.room.Entity

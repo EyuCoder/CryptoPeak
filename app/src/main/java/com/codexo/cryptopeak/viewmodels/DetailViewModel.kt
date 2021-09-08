@@ -4,10 +4,10 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
-import com.codexo.cryptopeak.database.CoinData
-import com.codexo.cryptopeak.database.CoinDatabase
-import com.codexo.cryptopeak.database.CoinHistory
-import com.codexo.cryptopeak.repository.Repository
+import com.codexo.cryptopeak.data.database.CoinData
+import com.codexo.cryptopeak.data.database.CoinDatabase
+import com.codexo.cryptopeak.data.database.CoinHistory
+import com.codexo.cryptopeak.data.Repository
 import com.codexo.cryptopeak.utils.NetworkStatus
 import kotlinx.coroutines.launch
 

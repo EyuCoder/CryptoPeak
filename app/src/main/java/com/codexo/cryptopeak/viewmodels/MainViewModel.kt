@@ -4,8 +4,8 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
-import com.codexo.cryptopeak.database.CoinDatabase
-import com.codexo.cryptopeak.repository.Repository
+import com.codexo.cryptopeak.data.database.CoinDatabase
+import com.codexo.cryptopeak.data.Repository
 import com.codexo.cryptopeak.utils.NetworkStatus
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -26,22 +26,34 @@ class MainViewModel(
             do {
                 _status.value = NetworkStatus.LOADING
                 try {
-                    repository.refreshCoin()
+                    refresh(count)
                     Log.d(TAG, "REFRESHED")
                     _status.value = NetworkStatus.DONE
                     delay(5000)
                 } catch (e: Exception) {
-                    Log.d(TAG, e.message.toString())
+                    Log.d(TAG, "fuck " + e.message.toString())
                     _status.value = NetworkStatus.ERROR
-                    delay(10000)
+                    delay(5000)
                 }
 
             } while (true)
         }
     }
 
+    private suspend fun refresh(count: Int) {
+        if (count > 0) {
+            Log.d(TAG, "not null here")
+            repository.updateCoin()
+        } else {
+            Log.d(TAG, "is null here")
+            repository.addCoin()
+        }
+    }
+
     val coinData = repository.coinData
     val favoriteCoin = repository.favoriteCoin
+    val dataCount = repository.coinCount
+    var count = 0
 
 
     fun markAsFavorite(flag: Boolean, id: String) {

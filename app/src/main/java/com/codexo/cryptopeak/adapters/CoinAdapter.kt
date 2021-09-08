@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.codexo.cryptopeak.database.CoinData
+import com.codexo.cryptopeak.data.database.CoinData
 import com.codexo.cryptopeak.databinding.LayoutItemBinding
 
 class CoinAdapter(private val listener: OnItemClickListener) :
@@ -27,11 +27,15 @@ class CoinAdapter(private val listener: OnItemClickListener) :
             binding.ivFavorite.setOnClickListener {
                 listener.onFavoriteClicked(!coinData.favorite, coinData.id)
             }
+            binding.itemCointraintLayout.setOnClickListener {
+                listener.onOpenDetail(coinData)
+            }
             binding.executePendingBindings()
         }
     }
 
     interface OnItemClickListener {
         fun onFavoriteClicked(markedFavorite: Boolean, id: String)
+        fun onOpenDetail(currentItem: CoinData)
     }
 }
