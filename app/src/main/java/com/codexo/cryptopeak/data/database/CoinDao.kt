@@ -17,6 +17,9 @@ interface CoinDao {
     @Query("SELECT * FROM coin_data WHERE favorite = :fave")
     fun getFavCoin(fave: Boolean = true): LiveData<List<CoinData>>
 
+    @Query("SELECT * FROM coin_data ORDER BY RANDOM()")
+    fun getRandomCoin(): LiveData<CoinData>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertAll(coinData: List<CoinData>)
 
@@ -54,20 +57,5 @@ interface CoinDao {
         vwap24Hr: String?,
         explorer: String?
     )
-
-//    val id: String,
-//    val rank: Int,
-//    val symbol: String,
-//    val name: String,
-//    val supply: String?,
-//    val maxSupply: String?,
-//    val marketCapUsd: String?,
-//    val volumeUsd24Hr: String?,
-//    val priceUsd: String?,
-//    val changePercent24Hr: String?,
-//    val vwap24Hr: String?,
-//    val explorer: String?,
-//    var favorite: Boolean= false
-
 }
 

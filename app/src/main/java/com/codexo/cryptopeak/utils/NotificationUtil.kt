@@ -5,16 +5,24 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.widget.ImageView
 import androidx.core.app.NotificationCompat
+import androidx.core.net.toUri
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.codexo.cryptopeak.R
+import com.codexo.cryptopeak.data.database.CoinData
 import com.codexo.cryptopeak.ui.MainActivity
+import java.util.*
 
 // Notification ID.
 private val NOTIFICATION_ID = 0
-private val REQUEST_CODE = 0
-private val FLAGS = 0
 
-fun NotificationManager.sendNotification(messageBody: String, applicationContext: Context) {
+fun NotificationManager.sendNotification(coin: CoinData?, applicationContext: Context) {
+    val icon = if (coin?.changePercent24Hr?.toInt()!! > 0) {
+        R.drawable.ic_high
+    } else R.drawable.ic_low
+    val messageBody = "${coin.name}: ${coin.changePercent24HrFormatted}"
 
     val contentIntent = Intent(applicationContext, MainActivity::class.java)
     val contentPendingIntent = PendingIntent.getActivity(
@@ -26,37 +34,21 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
 
     val cryptoPeakImage = BitmapFactory.decodeResource(
         applicationContext.resources,
-        R.drawable.ic_favorite,
+        icon,
     )
-
-    val bigPickStyle = NotificationCompat.BigPictureStyle()
-        .bigPicture(cryptoPeakImage)
-        .bigLargeIcon(null)
-
-//    val snoozeIntent = Intent(applicationContext, SnoozeReceiver::class.java)
-//    val snoozePendingIntent: PendingIntent = PendingIntent.getBroadcast(
-//        applicationContext,
-//        REQUEST_CODE,
-//        snoozeIntent,
-//        FLAGS)
 
     val builder = NotificationCompat.Builder(
         applicationContext,
         applicationContext.getString(R.string.cryptopeak_channel_id)
     )
-        .setSmallIcon(R.drawable.ic_favorite)
+        .setSmallIcon(R.drawable.ic_launcher)
         .setContentTitle(applicationContext.getString(R.string.app_name))
         .setContentText(messageBody)
         .setContentIntent(contentPendingIntent)
         .setAutoCancel(true)
-//        .setStyle(bigPickStyle)
         .setLargeIcon(cryptoPeakImage)
         .setPriority(NotificationCompat.PRIORITY_HIGH)
-//        .addAction(
-//            R.drawable.ic_broken_image,
-//            applicationContext.getString(R.string.snooze),
-//            snoozePendingIntent
-//        )
+
     notify(NOTIFICATION_ID, builder.build())
 }
 

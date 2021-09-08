@@ -9,6 +9,7 @@ import androidx.work.WorkerParameters
 import com.codexo.cryptopeak.R
 import com.codexo.cryptopeak.data.database.CoinDatabase.Companion.getDatabase
 import com.codexo.cryptopeak.data.Repository
+import com.codexo.cryptopeak.data.database.CoinData
 import com.codexo.cryptopeak.utils.sendNotification
 import retrofit2.HttpException
 
@@ -19,10 +20,11 @@ class RefreshDataWork(
     override suspend fun doWork(): Result {
         val database = getDatabase(applicationContext)
         val repository = Repository(database)
+        val randomCoin = repository.randomCoin
 
         return try {
             repository.updateCoin()
-            initNotification(applicationContext)
+            initNotification(applicationContext, randomCoin.value)
             Log.d("CODEXOX", "doWork: Background refresh once a day")
             Result.success()
         } catch (e: HttpException) {
@@ -35,7 +37,7 @@ class RefreshDataWork(
     }
 }
 
-private fun initNotification(context: Context) {
+private fun initNotification(context: Context, coin: CoinData?) {
 
     val notificationManager = ContextCompat.getSystemService(
         context,
@@ -43,7 +45,7 @@ private fun initNotification(context: Context) {
     ) as NotificationManager
 
     notificationManager.sendNotification(
-        context.getText(R.string.app_name).toString(),
+        coin,
         context
     )
 }

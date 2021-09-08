@@ -117,8 +117,8 @@ private fun formatDate(date: String): String {
     val outputFormat: DateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.US)
     val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US)
 
-    val dateParced = inputFormat.parse(date)
-    return outputFormat.format(dateParced)
+    val dateParsed = inputFormat.parse(date)
+    return outputFormat.format(dateParsed!!)
 }
 
 private fun formatTime(time: String?): String {
