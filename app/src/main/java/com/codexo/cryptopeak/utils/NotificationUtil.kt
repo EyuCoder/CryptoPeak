@@ -18,8 +18,8 @@ import java.util.*
 // Notification ID.
 private val NOTIFICATION_ID = 0
 
-fun NotificationManager.sendNotification(coin: CoinData?, applicationContext: Context) {
-    val icon = if (coin?.changePercent24Hr?.toInt()!! > 0) {
+fun NotificationManager.sendNotification(coin: CoinData, applicationContext: Context) {
+    val icon = if (coin.changePercent24Hr?.toDouble()!! > 0) {
         R.drawable.ic_high
     } else R.drawable.ic_low
     val messageBody = "${coin.name}: ${coin.changePercent24HrFormatted}"

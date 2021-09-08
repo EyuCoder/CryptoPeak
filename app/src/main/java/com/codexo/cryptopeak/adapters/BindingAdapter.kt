@@ -36,5 +36,13 @@ class BindingAdapter {
                 img.setImageResource(R.drawable.ic_favorite_on)
             } else img.setImageResource(R.drawable.ic_favorite_off)
         }
+
+        @BindingAdapter("android:high_low")
+        @JvmStatic
+        fun isHigh(img: ImageView, change24h: String) {
+            if (change24h.toDouble() > 0) {
+                img.setImageResource(R.drawable.ic_high)
+            } else img.setImageResource(R.drawable.ic_low)
+        }
     }
 }

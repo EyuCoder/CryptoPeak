@@ -13,6 +13,7 @@ import com.codexo.cryptopeak.data.database.CoinData
 import com.codexo.cryptopeak.utils.sendNotification
 import retrofit2.HttpException
 
+private val TAG: String = RefreshDataWork::class.java.simpleName
 class RefreshDataWork(
     context: Context, params: WorkerParameters
 ) : CoroutineWorker(context, params) {
@@ -24,7 +25,7 @@ class RefreshDataWork(
 
         return try {
             repository.updateCoin()
-            initNotification(applicationContext, randomCoin.value)
+            initNotification(applicationContext, randomCoin.value!!)
             Log.d("CODEXOX", "doWork: Background refresh once a day")
             Result.success()
         } catch (e: HttpException) {
@@ -37,13 +38,13 @@ class RefreshDataWork(
     }
 }
 
-private fun initNotification(context: Context, coin: CoinData?) {
+private fun initNotification(context: Context, coin: CoinData) {
 
     val notificationManager = ContextCompat.getSystemService(
         context,
         NotificationManager::class.java
     ) as NotificationManager
-
+    Log.d(TAG, "initNotification: sent ${coin.name}")
     notificationManager.sendNotification(
         coin,
         context
