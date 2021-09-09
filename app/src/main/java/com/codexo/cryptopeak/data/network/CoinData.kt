@@ -1,4 +1,4 @@
-package com.codexo.cryptopeak.network
+package com.codexo.cryptopeak.data.network
 
 import com.codexo.cryptopeak.data.database.CoinData
 import com.codexo.cryptopeak.data.database.CoinHistory

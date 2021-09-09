@@ -41,7 +41,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         val viewModelFactory = DetailViewModelFactory(database, repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(DetailViewModel::class.java)
 
-        viewModel.getCoinDetails(args.selectedItem.id)
+        refreshHistory()
 
         initUI()
         eventListeners()
@@ -105,9 +105,23 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             when (status!!) {
                 NetworkStatus.LOADING -> binding!!.pbHistoryLoading.visibility = View.VISIBLE
                 NetworkStatus.DONE -> binding!!.pbHistoryLoading.visibility = View.GONE
-                NetworkStatus.ERROR -> binding!!.pbHistoryLoading.visibility = View.GONE
+                NetworkStatus.ERROR -> {
+                    sparkLoadError()
+                }
             }
         })
+        binding!!.ibtnRetry.setOnClickListener { refreshHistory() }
+    }
+
+    private fun refreshHistory(){
+        binding!!.pbHistoryLoading.visibility = View.VISIBLE
+        binding!!.ibtnRetry.visibility = View.GONE
+        viewModel.getCoinDetails(args.selectedItem.id)
+    }
+
+    private fun sparkLoadError(){
+        binding!!.pbHistoryLoading.visibility = View.GONE
+        binding!!.ibtnRetry.visibility = View.VISIBLE
     }
 
     private fun updateInfoForDate(item: CoinHistory) {

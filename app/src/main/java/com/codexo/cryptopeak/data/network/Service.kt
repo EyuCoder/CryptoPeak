@@ -1,4 +1,4 @@
-package com.codexo.cryptopeak.network
+package com.codexo.cryptopeak.data.network
 
 import com.codexo.cryptopeak.utils.BASE_URL
 import com.squareup.moshi.Moshi

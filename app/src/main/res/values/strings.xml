@@ -15,5 +15,6 @@
     <string name="coinFragment">coinFragment</string>
     <string name="favoriteFragment">favoriteFragment</string>
     <string name="high_low">24hr Change High Low</string>
+    <string name="retry_button">retry button</string>
 
 </resources>

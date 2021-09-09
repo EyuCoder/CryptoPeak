@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import com.codexo.cryptopeak.data.database.CoinData
 import com.codexo.cryptopeak.data.database.CoinDatabase
 import com.codexo.cryptopeak.data.database.CoinHistory
-import com.codexo.cryptopeak.network.Network
-import com.codexo.cryptopeak.network.asDatabaseModel
-import com.codexo.cryptopeak.network.sorted
+import com.codexo.cryptopeak.data.network.Network
+import com.codexo.cryptopeak.data.network.asDatabaseModel
+import com.codexo.cryptopeak.data.network.sorted
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -15,7 +15,10 @@ class Repository(private val database: CoinDatabase) {
     val coinData: LiveData<List<CoinData>> = database.dao.getAllCoins()
     val favoriteCoin: LiveData<List<CoinData>> = database.dao.getFavCoin()
     val coinCount: LiveData<Int> = database.dao.getCount()
-    val randomCoin: LiveData<CoinData> = database.dao.getRandomCoin()
+    //val randomCoin: CoinData = database.dao.getRandomCoin()
+    suspend fun getRandomCoin(): CoinData{
+        return database.dao.getRandomCoin()
+    }
 
     fun getCoinDetail(id: String): LiveData<CoinData> = database.dao.getCoin(id)
 

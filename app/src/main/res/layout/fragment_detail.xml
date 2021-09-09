@@ -53,6 +53,22 @@
             app:layout_constraintStart_toStartOf="@+id/sparkview_history"
             app:layout_constraintTop_toTopOf="@+id/sparkview_history" />
 
+        <ImageButton
+            android:id="@+id/ibtn_retry"
+            android:layout_width="16dp"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:contentDescription="@string/retry_button"
+            android:scaleX="3"
+            android:scaleY="3"
+            android:src="@drawable/ic_retry"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/sparkview_history"
+            app:layout_constraintEnd_toEndOf="@+id/sparkview_history"
+            app:layout_constraintStart_toStartOf="@+id/sparkview_history"
+            app:layout_constraintTop_toTopOf="@+id/sparkview_history"
+            tools:visibility="visible" />
+
         <RadioGroup
             android:id="@+id/rg_timeIntervals"
             android:layout_width="wrap_content"

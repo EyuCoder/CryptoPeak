@@ -4,7 +4,7 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
-import com.codexo.cryptopeak.network.CoinDataContainer
+import com.codexo.cryptopeak.data.network.CoinDataContainer
 import java.text.DateFormat
 import java.text.DecimalFormat
 import java.text.NumberFormat

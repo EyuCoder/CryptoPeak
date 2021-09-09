@@ -17,8 +17,8 @@ interface CoinDao {
     @Query("SELECT * FROM coin_data WHERE favorite = :fave")
     fun getFavCoin(fave: Boolean = true): LiveData<List<CoinData>>
 
-    @Query("SELECT * FROM coin_data ORDER BY RANDOM()")
-    fun getRandomCoin(): LiveData<CoinData>
+    @Query("""SELECT * FROM coin_data WHERE favorite = :fave ORDER BY RANDOM() LIMIT 1""")
+    suspend fun getRandomCoin(fave: Boolean = true): CoinData
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertAll(coinData: List<CoinData>)

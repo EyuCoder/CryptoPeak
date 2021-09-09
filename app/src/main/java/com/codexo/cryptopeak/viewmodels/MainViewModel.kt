@@ -30,12 +30,12 @@ class MainViewModel(
                     Log.d(TAG, "REFRESHED")
                     _status.value = NetworkStatus.DONE
                     delay(5000)
+                    Log.d(TAG, "Random Coin: ${repository.getRandomCoin().name}")
                 } catch (e: Exception) {
                     Log.d(TAG, "fuck " + e.message.toString())
                     _status.value = NetworkStatus.ERROR
                     delay(5000)
                 }
-
             } while (true)
         }
     }
