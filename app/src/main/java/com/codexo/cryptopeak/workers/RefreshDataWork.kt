@@ -26,7 +26,7 @@ class RefreshDataWork(
         val randomCoin: CoinData
 
         return try {
-            repository.updateCoin()
+            //repository.updateCoin()
             randomCoin = repository.getRandomCoin()
             initNotification(applicationContext, randomCoin)
             Log.d(TAG, "doWork: Background refresh once a day")

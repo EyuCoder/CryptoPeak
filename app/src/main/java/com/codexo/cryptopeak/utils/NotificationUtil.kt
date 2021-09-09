@@ -34,7 +34,9 @@ fun NotificationManager.sendNotification(coin: CoinData, applicationContext: Con
 
     val cryptoPeakImage = BitmapFactory.decodeResource(
         applicationContext.resources,
-        icon,
+        if (coin.changePercent24Hr.toDouble() > 0) {
+            R.drawable.ic_high
+        } else R.drawable.ic_low,
     )
 
     val builder = NotificationCompat.Builder(

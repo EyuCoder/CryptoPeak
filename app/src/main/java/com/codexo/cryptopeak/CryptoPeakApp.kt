@@ -34,7 +34,7 @@ open class CryptoPeakApp : Application() {
                 }
             }.build()
 
-        val repeatingRequest = PeriodicWorkRequestBuilder<RefreshDataWork>(5, TimeUnit.SECONDS)
+        val repeatingRequest = PeriodicWorkRequestBuilder<RefreshDataWork>(1, TimeUnit.DAYS)
             .setConstraints(constraints)
             .build()
 
