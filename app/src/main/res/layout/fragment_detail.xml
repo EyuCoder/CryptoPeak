@@ -55,12 +55,12 @@
 
         <ImageButton
             android:id="@+id/ibtn_retry"
-            android:layout_width="16dp"
-            android:layout_height="wrap_content"
+            android:layout_width="20sp"
+            android:layout_height="20dp"
             android:background="@null"
             android:contentDescription="@string/retry_button"
-            android:scaleX="3"
-            android:scaleY="3"
+            android:scaleX="2"
+            android:scaleY="2"
             android:src="@drawable/ic_retry"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/sparkview_history"

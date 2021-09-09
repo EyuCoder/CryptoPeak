@@ -3,6 +3,7 @@ package com.codexo.cryptopeak.ui
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -74,10 +75,6 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         adapter.notifyDataSetChanged()
     }
 
-    private fun reloadLineChart(){
-        viewModel.getCoinDetails(args.selectedItem.id)
-    }
-
     private fun initUI() {
 
         viewModel.coinHistory.observe(viewLifecycleOwner, { coinHistory ->
@@ -104,7 +101,10 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         viewModel.status.observe(viewLifecycleOwner, { status ->
             when (status!!) {
                 NetworkStatus.LOADING -> binding!!.pbHistoryLoading.visibility = View.VISIBLE
-                NetworkStatus.DONE -> binding!!.pbHistoryLoading.visibility = View.GONE
+                NetworkStatus.DONE -> {
+                    binding!!.pbHistoryLoading.visibility = View.GONE
+                    radioButtonsEnable(true)
+                }
                 NetworkStatus.ERROR -> {
                     sparkLoadError()
                 }
@@ -113,13 +113,32 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         binding!!.ibtnRetry.setOnClickListener { refreshHistory() }
     }
 
-    private fun refreshHistory(){
+    private fun refreshHistory() {
         binding!!.pbHistoryLoading.visibility = View.VISIBLE
         binding!!.ibtnRetry.visibility = View.GONE
+        radioButtonsEnable(false)
         viewModel.getCoinDetails(args.selectedItem.id)
     }
 
-    private fun sparkLoadError(){
+    private fun radioButtonsEnable(enabled: Boolean) {
+        if (enabled) {
+            binding!!.apply {
+                rbAll.isEnabled = true
+                rbYear.isEnabled = true
+                rbMonth.isEnabled = true
+                rbWeek.isEnabled = true
+            }
+        } else {
+            binding!!.apply {
+                rbAll.isEnabled = false
+                rbYear.isEnabled = false
+                rbMonth.isEnabled = false
+                rbWeek.isEnabled = false
+            }
+        }
+    }
+
+    private fun sparkLoadError() {
         binding!!.pbHistoryLoading.visibility = View.GONE
         binding!!.ibtnRetry.visibility = View.VISIBLE
     }
