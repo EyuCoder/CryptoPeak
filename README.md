@@ -2,6 +2,17 @@
 
 ## Cryptocurrency Exchange rate Tracker Android app with live updates.
 
+<a href="https://play.google.com/store/apps/details?id=com.codexo.cryptopeak" target="_blank">
+<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="100"/></a>
+
+
+<p float="left">
+  <img src="screenshots/1.png" width="170" />
+  <img src="screenshots/2.png" width="170" /> 
+  <img src="screenshots/3.png" width="170" />
+  <img src="screenshots/4.png" width="170" />
+</p>
+
 ### Made With
 - Android jetpack Libraries
 - Dagger
@@ -13,14 +24,13 @@
 
 
 
-
-
 *LICENSE*
 This project is released under the Apache 2.0 license. See [LICENSE](./LICENSE) for details.
 
-```Copyright``` &copy; 2021 [Eyuel Dan](https://github.com/elysium09)
-
-  ``` Licensed under the Apache License, Version 2.0 (the "License");
+  ```
+   Copyright © 2021 Eyuel Daniel
+   
+   Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
 
