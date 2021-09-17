@@ -3,8 +3,8 @@ package com.codexo.cryptopeak.data.database
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import kotlinx.android.parcel.Parcelize
 import com.codexo.cryptopeak.data.network.CoinDataContainer
+import kotlinx.parcelize.Parcelize
 import java.text.DateFormat
 import java.text.DecimalFormat
 import java.text.NumberFormat
@@ -14,8 +14,7 @@ import java.util.*
 @Entity(tableName = "coin_data")
 @Parcelize
 data class CoinData(
-    @PrimaryKey
-    val id: String,
+    @PrimaryKey val id: String,
     val rank: Int,
     val symbol: String,
     val name: String,
@@ -27,30 +26,17 @@ data class CoinData(
     val changePercent24Hr: String?,
     val vwap24Hr: String?,
     val explorer: String?,
-    var favorite: Boolean= false
+    var favorite: Boolean = false
 ) : Parcelable {
-    val priceUsdFormatted: String
-        get() = formatCurrency(priceUsd?.toDouble())
 
+    val priceUsdFormatted get() = formatCurrency(priceUsd?.toDouble())
     val rankFormatted get() = rank.toString()
-
-    val vwap24HrFormatted: String
-        get() = formatCurrency(vwap24Hr?.toDouble())
-
-    val volumeUsd24HrFormatted: String
-        get() = formatCurrency(volumeUsd24Hr?.toDouble())
-
-    val changePercent24HrFormatted
-        get() = formatPercentage(changePercent24Hr?.toDouble())
-
-    val marketCapUsdFormatted: String
-        get() = formatCurrency(marketCapUsd?.toDouble())
-
-    val supplyFormatted: String
-        get() = formatNumber(supply?.toDouble())
-
-    val nameFormatted
-        get() = "$rank. $name($symbol)"
+    val vwap24HrFormatted get() = formatCurrency(vwap24Hr?.toDouble())
+    val volumeUsd24HrFormatted get() = formatCurrency(volumeUsd24Hr?.toDouble())
+    val changePercent24HrFormatted get() = formatPercentage(changePercent24Hr?.toDouble())
+    val marketCapUsdFormatted get() = formatCurrency(marketCapUsd?.toDouble())
+    val supplyFormatted get() = formatNumber(supply?.toDouble())
+    val nameFormatted get() = "$rank. $name($symbol)"
 }
 
 @Parcelize
@@ -58,18 +44,12 @@ data class CoinHistory(
     val priceUsd: String?,
     val time: String?,
     val date: String?,
+) : Parcelable {
 
-    ) : Parcelable {
-    val timeFormatted
-        get() = formatTime(time)
-
-    val dateFormatted: String
-        get() = formatDate(date.toString())
-
-    val priceFormatted: String
-        get() = formatCurrency(priceUsd?.toDouble())
+    val timeFormatted get() = formatTime(time)
+    val dateFormatted get() = formatDate(date.toString())
+    val priceFormatted get() = formatCurrency(priceUsd?.toDouble())
 }
-
 
 fun CoinDataContainer.asDomainModel(): List<CoinData> {
     return data.map {
@@ -114,8 +94,8 @@ private fun formatNumber(number: Double?): String {
 }
 
 private fun formatDate(date: String): String {
-    val outputFormat: DateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.US)
-    val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US)
+    val outputFormat = SimpleDateFormat("MMM dd, yyyy", Locale.US)
+    val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US)
 
     val dateParsed = inputFormat.parse(date)
     return outputFormat.format(dateParsed!!)

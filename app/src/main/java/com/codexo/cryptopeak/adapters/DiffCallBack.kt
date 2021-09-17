@@ -10,6 +10,5 @@ object DiffCallback : DiffUtil.ItemCallback<CoinData>() {
 
     override fun areContentsTheSame(oldItem: CoinData, newItem: CoinData): Boolean {
         return oldItem == newItem
-
     }
 }

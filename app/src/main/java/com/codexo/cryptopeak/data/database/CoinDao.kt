@@ -1,7 +1,10 @@
 package com.codexo.cryptopeak.data.database
 
 import androidx.lifecycle.LiveData
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 
 @Dao
 interface CoinDao {
@@ -15,10 +18,10 @@ interface CoinDao {
     fun getCount(): LiveData<Int>
 
     @Query("SELECT * FROM coin_data WHERE favorite = :fave")
-    fun getFavCoin(fave: Boolean = true): LiveData<List<CoinData>>
+    fun getFavCoins(fave: Boolean = true): LiveData<List<CoinData>>
 
-    @Query("""SELECT * FROM coin_data WHERE favorite = :fave ORDER BY RANDOM() LIMIT 1""")
-    suspend fun getRandomCoin(fave: Boolean = true): CoinData
+    @Query("SELECT * FROM coin_data WHERE favorite = :fave ORDER BY RANDOM() LIMIT 1")
+    suspend fun getRandomCoin(fave: Boolean = true): CoinData?
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertAll(coinData: List<CoinData>)

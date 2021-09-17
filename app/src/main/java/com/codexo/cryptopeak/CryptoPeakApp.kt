@@ -43,7 +43,5 @@ open class CryptoPeakApp : Application() {
             ExistingPeriodicWorkPolicy.KEEP,
             repeatingRequest
         )
-
     }
-
 }

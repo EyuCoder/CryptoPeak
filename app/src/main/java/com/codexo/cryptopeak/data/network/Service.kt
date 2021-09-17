@@ -15,7 +15,7 @@ interface Service {
     suspend fun getAssets(): Response<CoinDataContainer>
 
     @GET("v2/assets/{id}/history?interval=d1")
-    suspend fun getCoinHistory(@Path("id") id: String?): Response<CoinHistoryContainer>
+    suspend fun getCoinHistory(@Path("id") id: String): Response<CoinHistoryContainer>
 }
 
 private val moshi = Moshi.Builder()
@@ -29,5 +29,4 @@ object Network {
         .build()
 
     val coinCap: Service = retrofit.create(Service::class.java)
-
 }
