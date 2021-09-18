@@ -26,6 +26,10 @@ class DetailViewModel(
     private val _coinHistory = MutableLiveData<List<CoinHistory>>()
     val coinHistory get() = _coinHistory as LiveData<List<CoinHistory>>
 
+    init {
+        refreshHistory()
+    }
+
     fun refreshHistory() {
         viewModelScope.launch {
             _status.value = NetworkStatus.LOADING
@@ -45,8 +49,10 @@ class DetailViewModelFactory(
     private val repository: Repository,
     private val coinId: String
 ) : ViewModelProvider.Factory {
+
     @RequiresApi(Build.VERSION_CODES.N)
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        @Suppress("unchecked_cast")
         return DetailViewModel(database, repository, coinId) as T
     }
 }

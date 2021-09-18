@@ -125,7 +125,7 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_margin="@dimen/margin_medium"
-                    android:contentDescription="@string/cypto_coin_logo"
+                    android:contentDescription="@string/crypto_coin_logo"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:srcCompat="@tools:sample/avatars" />
@@ -139,7 +139,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/iv_logo"
                     app:layout_constraintStart_toEndOf="@+id/iv_logo"
                     app:layout_constraintTop_toTopOf="@+id/iv_logo"
-                    tools:text="@string/coin_name" />
+                    tools:text="Bitcoin(BTC)" />
 
                 <TableLayout
                     android:layout_width="0dp"

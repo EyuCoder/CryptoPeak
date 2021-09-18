@@ -3,10 +3,10 @@
     <item
         android:id="@+id/coinFragment"
         android:icon="@drawable/ic_home"
-        android:title="Home" />
+        android:title="@string/menu_home" />
     <item
         android:id="@+id/favoriteFragment"
         android:icon="@drawable/ic_favorite"
-        android:title="Favorite" />
+        android:title="@string/menu_favorite" />
 
 </menu>

@@ -104,7 +104,6 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         binding.ibtnRetry.setOnClickListener {
             refreshHistory()
         }
-        binding.ibtnRetry.performClick()
     }
 
     private fun updateTimeInterval(interval: TimeInterval) {

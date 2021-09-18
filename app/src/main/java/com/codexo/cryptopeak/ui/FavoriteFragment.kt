@@ -42,11 +42,9 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite) {
             setHasFixedSize(true)
         }
 
-        viewModel.favoriteCoins.observe(viewLifecycleOwner, {
-            coinAdapter.submitList(it)
+        viewModel.coinData.observe(viewLifecycleOwner, { coinData ->
+            coinAdapter.submitList(coinData.filter { it.favorite })
         })
-
-        setHasOptionsMenu(true)
     }
 
     private val coinAdapterItemClickListener = object : CoinAdapter.OnItemClickListener {

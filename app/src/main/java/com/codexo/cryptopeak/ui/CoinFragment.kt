@@ -1,12 +1,9 @@
 package com.codexo.cryptopeak.ui
 
-import android.graphics.Color
-import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -17,10 +14,8 @@ import com.codexo.cryptopeak.data.Repository
 import com.codexo.cryptopeak.data.database.CoinData
 import com.codexo.cryptopeak.data.database.CoinDatabase
 import com.codexo.cryptopeak.databinding.FragmentCoinBinding
-import com.codexo.cryptopeak.utils.NetworkUtil
 import com.codexo.cryptopeak.viewmodels.MainViewModel
 import com.codexo.cryptopeak.viewmodels.MainViewModelFactory
-import com.google.android.material.snackbar.Snackbar
 
 class CoinFragment : Fragment(R.layout.fragment_coin) {
 
@@ -34,7 +29,6 @@ class CoinFragment : Fragment(R.layout.fragment_coin) {
 
     private lateinit var database: CoinDatabase
     private lateinit var repository: Repository
-    private lateinit var networkListener: NetworkUtil
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,28 +45,8 @@ class CoinFragment : Fragment(R.layout.fragment_coin) {
             setHasFixedSize(true)
         }
 
-        viewModel.coinData.observe(viewLifecycleOwner, {
-            coinAdapter.submitList(it)
-        })
-        viewModel.dataCount.observe(requireActivity(), {
-            viewModel.count = it
-        })
-        //checkInternet()
-    }
-
-    private fun checkInternet() {
-        networkListener = NetworkUtil(
-            ContextCompat.getSystemService(requireContext(), ConnectivityManager::class.java)!!
-        )
-
-        networkListener.observe(viewLifecycleOwner, {
-            if (it) {
-                Snackbar.make(requireView(), "Connected!", Snackbar.LENGTH_LONG)
-                    .setTextColor(Color.GREEN)
-                    .show()
-            } else Snackbar.make(requireView(), "Disconnected!", Snackbar.LENGTH_LONG)
-                .setTextColor(Color.RED)
-                .show()
+        viewModel.coinData.observe(viewLifecycleOwner, { coinData ->
+            coinAdapter.submitList(coinData)
         })
     }
 
