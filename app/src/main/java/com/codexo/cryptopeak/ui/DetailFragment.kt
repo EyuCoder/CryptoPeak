@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.codexo.cryptopeak.R
@@ -21,8 +21,8 @@ import com.codexo.cryptopeak.viewmodels.DetailViewModelFactory
 
 class DetailFragment : Fragment(R.layout.fragment_detail) {
 
-    private val viewModel: DetailViewModel by activityViewModels {
-        DetailViewModelFactory(database, repository)
+    private val viewModel: DetailViewModel by viewModels {
+        DetailViewModelFactory(database, repository, args.selectedItem.id)
     }
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
@@ -42,8 +42,6 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
         initUI()
         eventListeners()
-
-        setHasOptionsMenu(true)
     }
 
     private fun initUI() {
@@ -118,7 +116,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         binding.pbHistoryLoading.visibility = View.VISIBLE
         binding.ibtnRetry.visibility = View.GONE
         radioButtonsEnabled(false)
-        viewModel.updateCoinDetails(args.selectedItem.id)
+        viewModel.refreshHistory()
     }
 
     private fun radioButtonsEnabled(isEnabled: Boolean) {

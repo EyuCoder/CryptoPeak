@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
 import com.codexo.cryptopeak.data.Repository
-import com.codexo.cryptopeak.data.database.CoinData
 import com.codexo.cryptopeak.data.database.CoinDatabase
 import com.codexo.cryptopeak.data.database.CoinHistory
 import com.codexo.cryptopeak.utils.NetworkStatus
@@ -15,26 +14,19 @@ private val TAG = DetailViewModel::class.java.simpleName
 
 class DetailViewModel(
     private val database: CoinDatabase,
-    private val repository: Repository
+    private val repository: Repository,
+    private val coinId: String
 ) : ViewModel() {
-
-    private lateinit var _coinDetail: LiveData<CoinData>
-    val coinDetail get() = _coinDetail
-
-    private val _coinHistory = MutableLiveData<List<CoinHistory>>()
-    val coinHistory get() = _coinHistory as LiveData<List<CoinHistory>>
 
     private val _status = MutableLiveData<NetworkStatus>()
     val status get() = _status as LiveData<NetworkStatus>
 
-    fun updateCoinDetails(coinId: String) {
-        viewModelScope.launch {
-            _coinDetail = repository.getCoinDetail(coinId)
-        }
-        refreshHistory(coinId)
-    }
+    val coinDetail = repository.getCoinDetail(coinId)
 
-    private fun refreshHistory(coinId: String) {
+    private val _coinHistory = MutableLiveData<List<CoinHistory>>()
+    val coinHistory get() = _coinHistory as LiveData<List<CoinHistory>>
+
+    fun refreshHistory() {
         viewModelScope.launch {
             _status.value = NetworkStatus.LOADING
             try {
@@ -50,10 +42,11 @@ class DetailViewModel(
 
 class DetailViewModelFactory(
     private val database: CoinDatabase,
-    private val repository: Repository
+    private val repository: Repository,
+    private val coinId: String
 ) : ViewModelProvider.Factory {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return DetailViewModel(database, repository) as T
+        return DetailViewModel(database, repository, coinId) as T
     }
 }
