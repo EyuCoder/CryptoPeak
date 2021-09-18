@@ -11,7 +11,7 @@ import retrofit2.http.Path
 
 interface Service {
 
-    @GET("v2/assets")
+    @GET("v2/assets?limit=${Network.FETCH_LIMIT}")
     suspend fun getAssets(): Response<CoinDataContainer>
 
     @GET("v2/assets/{id}/history?interval=d1")
@@ -29,4 +29,6 @@ object Network {
         .build()
 
     val coinCap: Service = retrofit.create(Service::class.java)
+
+    const val FETCH_LIMIT = 100
 }

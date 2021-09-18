@@ -10,7 +10,7 @@ data class CoinDataContainer(val data: List<CoinData>, val timestamp: Long)
 @JsonClass(generateAdapter = true)
 data class CoinHistoryContainer(val data: List<CoinHistory>, val timestamp: Long)
 
-fun CoinHistoryContainer.sorted(): List<CoinHistory> {
+fun CoinHistoryContainer.sortedByDate(): List<CoinHistory> {
     return data.sortedByDescending { it.date }
 }
 

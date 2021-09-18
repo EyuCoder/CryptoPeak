@@ -23,7 +23,7 @@ class RefreshDataWork(
         val repository = Repository(database)
 
         return try {
-            repository.updateCoin()
+            repository.updateCoinData()
             repository.getRandomCoin()?.let {
                 initNotification(applicationContext, it)
             }
