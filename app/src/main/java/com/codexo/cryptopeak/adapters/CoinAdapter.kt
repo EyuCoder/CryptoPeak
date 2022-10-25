@@ -5,13 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.codexo.cryptopeak.data.database.CoinData
-import com.codexo.cryptopeak.databinding.LayoutItemBinding
+import com.codexo.cryptopeak.databinding.ItemCoinlistBinding
 
 class CoinAdapter(private val listener: OnItemClickListener) :
     ListAdapter<CoinData, CoinAdapter.CoinViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoinViewHolder {
-        val binding = LayoutItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemCoinlistBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return CoinViewHolder(binding)
     }
 
@@ -19,7 +20,7 @@ class CoinAdapter(private val listener: OnItemClickListener) :
         holder.bind(getItem(position))
     }
 
-    inner class CoinViewHolder(private val binding: LayoutItemBinding) :
+    inner class CoinViewHolder(private val binding: ItemCoinlistBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(coinData: CoinData) {

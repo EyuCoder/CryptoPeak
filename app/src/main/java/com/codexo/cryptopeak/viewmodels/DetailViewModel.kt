@@ -4,37 +4,33 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
-import com.codexo.cryptopeak.data.database.CoinData
+import com.codexo.cryptopeak.data.Repository
 import com.codexo.cryptopeak.data.database.CoinDatabase
 import com.codexo.cryptopeak.data.database.CoinHistory
-import com.codexo.cryptopeak.data.Repository
 import com.codexo.cryptopeak.utils.NetworkStatus
 import kotlinx.coroutines.launch
 
 private val TAG = DetailViewModel::class.java.simpleName
 
 class DetailViewModel(
-    private val database: CoinDatabase, private val repository: Repository
+    private val database: CoinDatabase,
+    private val repository: Repository,
+    private val coinId: String
 ) : ViewModel() {
 
-    private lateinit var _coinDetail: LiveData<CoinData>
-    val coinDetail get() = _coinDetail
-
-    private var _coinHistory = MutableLiveData<List<CoinHistory>>()
-    val coinHistory get() = _coinHistory
-
     private val _status = MutableLiveData<NetworkStatus>()
-    val status: LiveData<NetworkStatus>
-        get() = _status
+    val status get() = _status as LiveData<NetworkStatus>
 
-    fun getCoinDetails(coinId: String) {
-        viewModelScope.launch {
-            _coinDetail = repository.getCoinDetail(coinId)
-        }
-        refreshHistory(coinId)
+    val coinDetail = repository.getCoinDetail(coinId)
+
+    private val _coinHistory = MutableLiveData<List<CoinHistory>>()
+    val coinHistory get() = _coinHistory as LiveData<List<CoinHistory>>
+
+    init {
+        refreshHistory()
     }
 
-    fun refreshHistory(coinId: String) {
+    fun refreshHistory() {
         viewModelScope.launch {
             _status.value = NetworkStatus.LOADING
             try {
@@ -46,14 +42,17 @@ class DetailViewModel(
             }
         }
     }
+}
 
-    class DetailViewModelFactory(
-        private val database: CoinDatabase,
-        private val repository: Repository
-    ) : ViewModelProvider.Factory {
-        @RequiresApi(Build.VERSION_CODES.N)
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return DetailViewModel(database, repository) as T
-        }
+class DetailViewModelFactory(
+    private val database: CoinDatabase,
+    private val repository: Repository,
+    private val coinId: String
+) : ViewModelProvider.Factory {
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        @Suppress("unchecked_cast")
+        return DetailViewModel(database, repository, coinId) as T
     }
 }

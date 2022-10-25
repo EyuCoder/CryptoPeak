@@ -13,14 +13,15 @@ abstract class CoinDatabase : RoomDatabase() {
         private lateinit var INSTANCE: CoinDatabase
 
         fun getDatabase(context: Context): CoinDatabase {
-
-            synchronized(CoinDatabase::class.java) {
-                if (!::INSTANCE.isInitialized) {
-                    INSTANCE = Room.databaseBuilder(
-                        context.applicationContext,
-                        CoinDatabase::class.java,
-                        "crypto_peak_db"
-                    ).build()
+            if (!::INSTANCE.isInitialized) {
+                synchronized(CoinDatabase::class.java) {
+                    if (!::INSTANCE.isInitialized) {
+                        INSTANCE = Room.databaseBuilder(
+                            context.applicationContext,
+                            CoinDatabase::class.java,
+                            "crypto_peak_db"
+                        ).build()
+                    }
                 }
             }
             return INSTANCE

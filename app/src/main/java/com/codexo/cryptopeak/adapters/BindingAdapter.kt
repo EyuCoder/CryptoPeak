@@ -14,35 +14,30 @@ class BindingAdapter {
         @BindingAdapter("image_url")
         @JvmStatic
         fun bindImage(imgView: ImageView, imgUrl: String?) {
-            val url =
-                "$ICON_URL${imgUrl?.lowercase(Locale.getDefault())}@2x.png"
-            url.let {
-                val imgUri = url.toUri().buildUpon().scheme("https").build()
-                Glide.with(imgView.context)
-                    .load(imgUri)
-                    .apply(
-                        RequestOptions()
-                            .placeholder(R.drawable.loading_animation)
-                            .error(R.drawable.ic_broken_image)
-                    )
-                    .into(imgView)
-            }
+            val url = "$ICON_URL${imgUrl?.lowercase(Locale.getDefault())}@2x.png"
+            val imgUri = url.toUri().buildUpon().scheme("https").build()
+            Glide.with(imgView.context)
+                .load(imgUri)
+                .apply(
+                    RequestOptions()
+                        .placeholder(R.drawable.loading_animation)
+                        .error(R.drawable.ic_broken_image)
+                )
+                .into(imgView)
         }
 
         @BindingAdapter("android:is_favorite")
         @JvmStatic
         fun isFavorite(img: ImageView, marked: Boolean) {
-            if (marked) {
-                img.setImageResource(R.drawable.ic_favorite_on)
-            } else img.setImageResource(R.drawable.ic_favorite_off)
+            if (marked) img.setImageResource(R.drawable.ic_favorite_on)
+            else img.setImageResource(R.drawable.ic_favorite_off)
         }
 
         @BindingAdapter("android:high_low")
         @JvmStatic
         fun isHigh(img: ImageView, change24h: String) {
-            if (change24h.toDouble() > 0) {
-                img.setImageResource(R.drawable.ic_high)
-            } else img.setImageResource(R.drawable.ic_low)
+            if (change24h.toDouble() > 0) img.setImageResource(R.drawable.ic_high)
+            else img.setImageResource(R.drawable.ic_low)
         }
     }
 }

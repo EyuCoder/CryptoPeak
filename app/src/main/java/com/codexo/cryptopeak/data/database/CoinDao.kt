@@ -1,27 +1,30 @@
 package com.codexo.cryptopeak.data.database
 
 import androidx.lifecycle.LiveData
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
+import com.codexo.cryptopeak.data.network.Network
 
 @Dao
 interface CoinDao {
-    @Query("SELECT * FROM coin_data ORDER BY rank")
+    @Query("SELECT * FROM coin_data ORDER BY rank LIMIT ${Network.FETCH_LIMIT}")
     fun getAllCoins(): LiveData<List<CoinData>>
 
     @Query("SELECT * FROM coin_data WHERE id = :id")
     fun getCoin(id: String): LiveData<CoinData>
 
     @Query("SELECT COUNT(*) FROM coin_data")
-    fun getCount(): LiveData<Int>
+    suspend fun getCount(): Int
 
     @Query("SELECT * FROM coin_data WHERE favorite = :fave")
-    fun getFavCoin(fave: Boolean = true): LiveData<List<CoinData>>
+    fun getFavCoins(fave: Boolean = true): LiveData<List<CoinData>>
 
-    @Query("""SELECT * FROM coin_data WHERE favorite = :fave ORDER BY RANDOM() LIMIT 1""")
-    suspend fun getRandomCoin(fave: Boolean = true): CoinData
+    @Query("SELECT * FROM coin_data WHERE favorite = :fave ORDER BY RANDOM() LIMIT 1")
+    suspend fun getRandomCoin(fave: Boolean = true): CoinData?
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertAll(coinData: List<CoinData>)
+    @Insert
+    suspend fun insertCoin(coinData: CoinData)
 
     @Query("UPDATE coin_data SET favorite = :fave WHERE id = :id")
     suspend fun markAsFavorite(fave: Boolean, id: String)
@@ -56,6 +59,6 @@ interface CoinDao {
         changePercent24Hr: String?,
         vwap24Hr: String?,
         explorer: String?
-    )
+    ): Int
 }
 
