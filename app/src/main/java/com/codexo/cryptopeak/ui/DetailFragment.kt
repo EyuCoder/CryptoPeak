@@ -1,6 +1,8 @@
 package com.codexo.cryptopeak.ui
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -45,13 +47,14 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     }
 
     private fun initUI() {
-        viewModel.coinHistory.observe(viewLifecycleOwner, { coinHistory ->
+        viewModel.coinHistory.observe(viewLifecycleOwner) { coinHistory ->
             adapter = CoinDetailAdapter(coinHistory.reversed())
             binding.sparkviewHistory.adapter = adapter
             updateInfoForDate(coinHistory.first())
-        })
+            setHasOptionsMenu(false)
+        }
 
-        viewModel.coinDetail.observe(viewLifecycleOwner, { coinDetail ->
+        viewModel.coinDetail.observe(viewLifecycleOwner) { coinDetail ->
             binding.apply {
                 tvCoinName.text = coinDetail.nameFormatted
                 tvRank.text = coinDetail.rankFormatted
@@ -63,9 +66,9 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                 tvChartPrice.text = coinDetail.priceUsdFormatted
                 BindingAdapter.bindImage(ivLogo, coinDetail.symbol)
             }
-        })
+        }
 
-        viewModel.status.observe(viewLifecycleOwner, { status ->
+        viewModel.status.observe(viewLifecycleOwner) { status ->
             when (status!!) {
                 NetworkStatus.LOADING -> {
                     binding.pbHistoryLoading.visibility = View.VISIBLE
@@ -79,7 +82,13 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                     binding.ibtnRetry.visibility = View.VISIBLE
                 }
             }
-        })
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        val item: MenuItem = menu.findItem(R.id.search)
+        item.isVisible = false
     }
 
     private fun eventListeners() {

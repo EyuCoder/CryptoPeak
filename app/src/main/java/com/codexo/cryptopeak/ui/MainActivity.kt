@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
             ContextCompat.getSystemService(this, ConnectivityManager::class.java)!!
         )
 
-        networkListener.observe(this, {
+        networkListener.observe(this) {
             if (it) {
                 Snackbar.make(binding.navHostFragment, "Connected!", Snackbar.LENGTH_LONG)
                     .setTextColor(Color.GREEN)
@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity() {
                     .setTextColor(Color.RED)
                     .show()
             }
-        })
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

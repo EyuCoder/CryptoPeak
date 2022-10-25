@@ -1,5 +1,6 @@
 package com.codexo.cryptopeak.utils
 
+import android.annotation.SuppressLint
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
@@ -13,6 +14,7 @@ import com.codexo.cryptopeak.ui.MainActivity
 // Notification ID.
 private const val NOTIFICATION_ID = 0
 
+@SuppressLint("UnspecifiedImmutableFlag")
 fun NotificationManager.sendNotification(coin: CoinData, applicationContext: Context) {
     val messageBody = "${coin.name}: ${coin.changePercent24HrFormatted}"
 

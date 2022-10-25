@@ -7,14 +7,14 @@ plugins {
 }
 
 android {
-    compileSdk 30
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.codexo.cryptopeak"
         minSdk 21
-        targetSdk 30
-        versionCode 1
-        versionName "1.0"
+        targetSdk 33
+        versionCode 2
+        versionName "1.0.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -77,12 +77,6 @@ dependencies {
     def worker_version = "2.6.0"
     // WorkManager
     implementation "androidx.work:work-runtime-ktx:$worker_version"
-
-    def dagger_version = "2.38.1"
-    //dagger2 for DI
-    implementation "com.google.dagger:dagger:$dagger_version"
-    kapt "com.google.dagger:dagger-compiler:$dagger_version"
-    kaptAndroidTest "com.google.dagger:dagger-compiler:$dagger_version"
 
     def moshi_version = "1.9.3"
     //moshi json parser
